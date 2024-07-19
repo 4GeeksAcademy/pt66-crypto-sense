@@ -12,6 +12,7 @@ sqlalchemy = "*"
 flask-cors = "*"
 flask-admin = "*"
 python-dotenv = "*"
+shell = "*"
 
 [dev-packages]
 
