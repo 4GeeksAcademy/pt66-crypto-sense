@@ -13,6 +13,8 @@ flask-cors = "*"
 flask-admin = "*"
 python-dotenv = "*"
 shell = "*"
+flask-jwt-extended = "*"
+flask-talisman = "*"
 
 [dev-packages]
 
