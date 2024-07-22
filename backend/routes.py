@@ -3,6 +3,9 @@ from flask import Blueprint, request, jsonify, url_for, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import db, User, Favorite
 from flask_cors import CORS
+from flask_jwt_extended import (
+    JWTManager, create_access_token, jwt_required, get_jwt_identity
+)
 
 api = Blueprint('api', __name__, url_prefix='/api')
 
