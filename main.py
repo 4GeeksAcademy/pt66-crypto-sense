@@ -8,10 +8,11 @@ from flask import (
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 
 from backend.admin import setup_admin
 from backend.commands import setup_commands
-from backend.models import db
+from backend.models import db, User
 from backend.routes import api
 
 load_dotenv()
@@ -30,11 +31,30 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
 db.init_app(app)
 migrate = Migrate(app, db)
 cors = CORS(app)
+jwt = JWTManager(app)
+
+# Register a callback function that takes whatever object is passed in as the
+# identity when creating JWTs and converts it to a JSON serializable format.
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+    return user.email
+
+
+# Register a callback function that loads a user from your database whenever
+# a protected route is accessed. This should return any python object on a
+# successful lookup, or None if the lookup failed for any reason (for example
+# if the user has been deleted from the database).
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return User.query.filter_by(email=identity).first()
+
 
 setup_admin(app)
 setup_commands(app)
 
 app.register_blueprint(api)
+app.config["JWT_SECRET_KEY"] = "1234test134"
 
 
 def has_no_empty_params(rule):

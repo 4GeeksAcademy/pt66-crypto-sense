@@ -15,7 +15,7 @@ class User(db.Model):
     _password = db.Column(db.String(250), nullable=False)
     username = db.Column(db.String(80), nullable=False, unique=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
-    favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
+    # favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
 
     # New fields for password reset 
     password_reset_token = db.Column(db.String(100), unique=True, nullable=True)
