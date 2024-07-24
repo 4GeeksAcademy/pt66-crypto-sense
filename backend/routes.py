@@ -1,6 +1,5 @@
 import sqlalchemy as sa
 from flask import Blueprint, request, jsonify, url_for, abort
-from flask_jwt_extended import jwt_required, get_jwt_identity
 from backend.models import db, User
 from flask_cors import CORS
 from flask_jwt_extended import (
@@ -123,21 +122,5 @@ def login_user():
     }
     return jsonify(response_body), 201
 
-    # except Exception as e:
-    #     return jsonify({"message": "Internal server error"}), 500
 
-# @api.route('/user', methods=['GET'])
-# @jwt_required()
-# def get_user():
-#     user_id = get_jwt_identity()
-#     user = User.query.get(user_id)
 
-#     if not user:
-#         return jsonify({"message": "User not found"}), 400
-#     return jsonify({
-#         "user": {
-#             "email": user.email,
-#             "username": user.username,
-#             "is_active": user.is_active
-#         }
-#     }), 200
