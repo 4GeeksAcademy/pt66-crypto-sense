@@ -1,7 +1,8 @@
 import sqlalchemy as sa
-from flask import Blueprint, request, jsonify, url_for, abort
+from flask import Blueprint, request, jsonify, url_for, abort, current_app
 from backend.models import db, User
 from flask_cors import CORS
+from backend.utils import send_reset_email
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity
 )
@@ -25,6 +26,16 @@ def get_users():
 
 @api.route('/register', methods=['POST'])
 def register_user():
+    """
+    payload:
+    {
+	    "username": "string",
+	    "email": "string",
+	    "password": "string",
+	    "first_name": "string",
+	    "last_name": "string"
+    }
+    """
     data = request.get_json()
     if 'username' not in data or 'email' not in data or 'password' not in data or 'first_name' not in data or 'last_name' not in data:
         return jsonify({'error': 'must include username, email, password, first name, and last name fields'}), 400
@@ -101,6 +112,13 @@ def update_user(id):
 
 @api.route('/token', methods=['POST'])
 def login_user():
+    """
+    payload:
+    {
+	    "email": "string",
+	    "password": "string"
+    }
+    """
     data = request.get_json()
     if not data:
         return jsonify({"message": "Invalid input"}), 400
@@ -122,5 +140,33 @@ def login_user():
     }
     return jsonify(response_body), 201
 
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    """
+    payload:
+    {
+        "email" : "string"
+    }
+    """
+    email = request.json.get('email')
+    user = User.query.filter_by(email = email).first()
+    if user:
+        send_reset_email(user)
+    else:
+        return jsonify({"message": "Email provided is not in our records"}), 404
+    return jsonify({"message": "If an account with that email exists, we have sent a password reset link"}), 200
 
-
+@api.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    """
+    payload:
+    {
+        "new_password" : "string"
+    }
+    """
+    user = User.query.filter_by(reset_token = token).first()
+    if user and user.verify_reset_token(token):
+        new_password = request.json.get('new_password')
+        user.reset_password(new_password)
+        return jsonify({"message": "Your password has been updated"}), 200
+    return jsonify({"message": "Invalid or expired token"}), 400

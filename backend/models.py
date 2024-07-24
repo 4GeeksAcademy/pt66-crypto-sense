@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
+from sqlalchemy import func
 import secrets
+
 
 db = SQLAlchemy()
 
@@ -16,12 +18,13 @@ class User(db.Model):
     _password = db.Column(db.String(250), nullable=False)
     username = db.Column(db.String(80), nullable=False, unique=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
-    # favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
-
-    # New fields for timestamps
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(
-        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
+    created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), 
+                           onupdate=lambda: datetime.now(timezone.utc))
+    reset_token = db.Column(db.String(100), unique=True, nullable=True)
+    reset_token_expiration = db.Column(db.DateTime(timezone=True), nullable=True, 
+                                        default=lambda: datetime.now(timezone.utc) + timedelta(hours=1))
 
     @hybrid_property
     def password(self):
@@ -52,6 +55,26 @@ class User(db.Model):
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
             self.password = data['password']
+
+    def generate_reset_token(self):
+        self.reset_token = secrets.token_urlsafe(32)
+        self.reset_token_expiration = datetime.now(timezone.utc) + timedelta(hours=1)
+        db.session.commit()
+        return self.reset_token
+    
+    def verify_reset_token(self, token):
+        if token != self.reset_token or self.reset_token_expiration < datetime.now(timezone.utc):
+            return False
+        return True
+    
+    def reset_password(self, new_password):
+        self.password = new_password
+        self.password_reset_token = None
+        self.password_reset_expiration = None
+        db.session.commit()
+
+    
+
 
 
 class Favorite(db.Model):
