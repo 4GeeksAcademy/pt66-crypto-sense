@@ -1,0 +1,101 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.register {
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register .card {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: white;
+  width: 50%;
+  height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+  -webkit-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+  -moz-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+}
+
+.register .card .left {
+  flex: 1;
+  background: linear-gradient(#1f235e77, #3f458b77),
+    url("https://images.pexels.com/photos/6771152/pexels-photo-6771152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center;
+  background-size: cover;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: white;
+}
+
+.register .card .left h1 {
+  font-size: 100px;
+  line-height: 100px;
+}
+
+.register .card .left p {
+  font-size: 20px;
+}
+
+.register .card .left span {
+  font-size: 15px;
+}
+
+.register .card .left button {
+  width: 50%;
+  padding: 10px;
+  background-color: white;
+  color: navy;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.register .card .right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+}
+
+.register .card .right h1 {
+  color: navy;
+}
+
+.register .card .right form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.register .card .right form input {
+  border: none;
+  border-bottom: 1px solid lightgray;
+  padding: 10px 10px;
+}
+
+.register .card .right form button {
+  width: 50%;
+  padding: 10px;
+  color: white;
+  background-color: navy;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
