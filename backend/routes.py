@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 from flask import Blueprint, request, jsonify, url_for, abort, current_app
-from backend.models import db, User
+from backend.models import db, User, Favorite
 from flask_cors import CORS
 from backend.utils import send_reset_email
 from flask_jwt_extended import (
@@ -74,41 +74,136 @@ def update_user(id):
     db.session.commit()
     return jsonify(user.to_dict())
 
-# @api.route('/favorites', methods=['POST'])
-# @jwt_required()
-# def add_favorite():
-#     user_id = get_jwt_identity()
-#     data = request.get_json()
-#     coin_id = data.get('coin_id')
 
-#     if not coin_id:
-#         return jsonify({'error': 'coin_id is required'}), 400
+@api.route('/favorites', methods=['POST'])
+@jwt_required()
+def add_favorite():
+    try:
+        current_user_email = get_jwt_identity()
+        current_user = User.query.filter_by(email=current_user_email).first()
+        
+        if not current_user:
+            return jsonify({'error': 'User not authenticated or not found'}), 401
 
-#     favorite = Favorite(user_id=user_id, coin_id=coin_id)
-#     db.session.add(favorite)
-#     db.session.commit()
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided in the request'}), 400
 
-#     return jsonify(favorite.serialize()), 201
+        favorites_data = data.get('favorites')
+        if not favorites_data or not isinstance(favorites_data, list):
+            return jsonify({'error': 'Invalid or missing favorites list in the request'}), 400
 
-# @api.route('/favorites', methods=['GET'])
-# @jwt_required()
-# def get_favorites():
-#     user_id = get_jwt_identity()
-#     favorites = Favorite.query.filter_by(user_id=user_id).all()
-#     return jsonify([favorite.serialize() for favorite in favorites])
+        added_favorites = []
+        existing_favorites = []
+        invalid_favorites = []
 
-# @api.route('/favorites/<int:id>', methods=['DELETE'])
-# @jwt_required()
-# def delete_favorite(id):
-#     user_id = get_jwt_identity()
-#     favorite = Favorite.query.filter_by(user_id=user_id, id=id).first()
+        for favorite_item in favorites_data:
+            coin_id = favorite_item.get('coin_id')
+            
+            if not coin_id:
+                invalid_favorites.append(favorite_item)
+                continue
 
-#     if not favorite:
-#         return jsonify({'error': 'Favorite not found'}), 404
+            existing_favorite = Favorite.query.filter_by(user_id=current_user.id, coin_id=coin_id).first()
+            if existing_favorite:
+                existing_favorites.append(coin_id)
+            else:
+                favorite = Favorite(user_id=current_user.id, coin_id=coin_id)
+                db.session.add(favorite)
+                added_favorites.append(favorite)
 
-#     db.session.delete(favorite)
-#     db.session.commit()
-#     return '', 204
+        if invalid_favorites:
+            db.session.rollback()
+            return jsonify({
+                'error': 'Some favorites are invalid',
+                'invalid_favorites': invalid_favorites
+            }), 400
+
+        db.session.commit()
+
+        return jsonify({
+            'message': 'Favorites processed successfully',
+            'added': [favorite.serialize() for favorite in added_favorites],
+            'existing': existing_favorites,
+            'total_added': len(added_favorites),
+            'total_existing': len(existing_favorites)
+        }), 201 if added_favorites else 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in add_favorite: {str(e)}")
+        return jsonify({'error': 'An unexpected error occurred while adding favorites'}), 500
+
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorites():
+    try:
+        current_user_email = get_jwt_identity()
+        current_user = User.query.filter_by(email=current_user_email).first()
+        
+        if not current_user:
+            return jsonify({'error': 'User not found'}), 404
+
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 50, type=int)
+
+        favorites = Favorite.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({
+            'items': [favorite.serialize() for favorite in favorites.items],
+            'total': favorites.total,
+            'pages': favorites.pages,
+            'current_page': favorites.page
+        })
+    except Exception as e:
+        print(f"Error in get_favorites: {str(e)}")
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+    
+@api.route('/favorites/<int:id>', methods=['GET'])
+@jwt_required()
+def get_favorite(id):
+    try:
+        current_user_email = get_jwt_identity()
+        current_user = User.query.filter_by(email=current_user_email).first()
+        
+        if not current_user:
+            return jsonify({'error': 'User not found'}), 404
+
+        favorite = Favorite.query.filter_by(id=id, user_id=current_user.id).first()
+        
+        if not favorite:
+            return jsonify({'error': 'Favorite not found'}), 404
+
+        return jsonify(favorite.serialize())
+    except Exception as e:
+        print(f"Error in get_favorite: {str(e)}")
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+
+
+    
+@api.route('/favorites/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite(id):
+    try:
+        current_user_email = get_jwt_identity()
+        current_user = User.query.filter_by(email=current_user_email).first()
+        
+        if not current_user:
+            return jsonify({'error': 'User not authenticated or not found'}), 404
+
+        favorite = Favorite.query.filter_by(id=id, user_id=current_user.id).first()
+        
+        if not favorite:
+            return jsonify({'error': f'Favorite with id {id} not found for the current user or you do not have permission to delete it'}), 404
+
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({'message': f'Favorite with id {id} successfully deleted'}), 200
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in delete_favorite: {str(e)}")
+        return jsonify({'error': f'An unexpected error occurred while trying to delete favorite with id {id}'}), 500
+    
 
 @api.route('/token', methods=['POST'])
 def login_user():
