@@ -3,6 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timezone, timedelta
 from sqlalchemy import func
+from sqlalchemy import UniqueConstraint
 import secrets
 
 
@@ -93,7 +94,7 @@ class Favorite(db.Model):
     coin_id = db.Column(
         db.String(80),
         nullable=False,
-        unique=True
+        
     )
 
     user = db.relationship(
@@ -101,6 +102,8 @@ class Favorite(db.Model):
         back_populates="favorites",
         uselist=False
     )
+
+    __table_args__ = (UniqueConstraint('user_id', 'coin_id', name='_user_coin_uc'),)
 
     def serialize(self):
         return {
