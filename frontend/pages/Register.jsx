@@ -5,11 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const Register = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setlastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setlastName] = useState("");
   const navigate = useNavigate();
   const { dispatch } = useGlobalReducer();
 
@@ -24,11 +24,11 @@ const Register = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userName,
+            username,
             email,
             password,
-            firstName,
-            lastName,
+            first_name,
+            last_name,
           }),
         }
       );
@@ -66,7 +66,7 @@ const Register = () => {
             <input
               type="text"
               placeholder="Username"
-              value={userName}
+              value={username}
               onChange={(e) => setUserName(e.target.value)}
               required
             />
@@ -88,14 +88,14 @@ const Register = () => {
             <input
               type="text"
               placeholder="First name"
-              value={firstName}
+              value={first_name}
               onChange={(e) => setFirstName(e.target.value)}
               required
             />
             <input
               type="text"
               placeholder="Last name"
-              value={lastName}
+              value={last_name}
               onChange={(e) => setlastName(e.target.value)}
               required
             />
