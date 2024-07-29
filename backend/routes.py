@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+import requests
 from flask import Blueprint, request, jsonify, url_for, abort, current_app
 from backend.models import db, User, Favorite
 from flask_cors import CORS
@@ -8,6 +9,8 @@ from flask_jwt_extended import (
 )
 
 api = Blueprint('api', __name__, url_prefix='/api')
+
+COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
 
 # Allow CORS requests to this API
 CORS(api)
@@ -265,3 +268,22 @@ def reset_password(token):
         user.reset_password(new_password)
         return jsonify({"message": "Your password has been updated"}), 200
     return jsonify({"message": "Invalid or expired token"}), 400
+
+@api.route('/search', methods=['GET'])
+def search_coins():
+    query = request.args.get('query', '')
+    if not query:
+        return jsonify({'error': 'Query parameter is required'}), 400
+
+    try:
+        response = requests.get(f'{COINGECKO_API_URL}/search?query={query}')
+        
+        if response.status_code == 200:
+            return jsonify(response.json()), 200
+        elif response.status_code == 429:
+            return jsonify({'error': 'Rate limit exceeded. Please try again later.'}), 429
+        else:
+            return jsonify({'error': f'CoinGecko API error: {response.text}'}), response.status_code
+
+    except requests.RequestException as e:
+        return jsonify({'error': f'Failed to fetch data from CoinGecko: {str(e)}'}), 500
