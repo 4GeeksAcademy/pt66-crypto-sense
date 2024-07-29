@@ -1,0 +1,99 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login {
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login .card {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 50%;
+    height: 600px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+    -webkit-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+}
+
+.login .card .left {
+    flex: 1;
+    background: linear-gradient(#1f235e77, #3f458b77), url("https://images.pexels.com/photos/9400883/pexels-photo-9400883.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center;
+    background-size: cover;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: white;
+}
+
+.login .card .left h1 {
+    font-size: 100px;
+    line-height: 100px;
+}
+
+.login .card .left p {
+    font-size: 20px;
+}
+
+.login .card .left span {
+    font-size: 15px;
+}
+
+.login .card .left button {
+    width: 50%;
+    padding: 10px;
+    background-color: white;
+    color: navy;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.login .card .right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+}
+
+.login .card .right h1 {
+    color: navy;
+}
+
+.login .card .right form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.login .card .right form input {
+    border: none;
+    border-bottom: 1px solid lightgray;
+    padding: 10px 10px;
+}
+
+.login .card .right form button {
+    width: 50%;
+    padding: 10px;
+    color: white;
+    background-color: navy;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}

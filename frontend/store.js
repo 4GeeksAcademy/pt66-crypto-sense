@@ -1,5 +1,7 @@
 export const initialStore=()=>{
   return{
+    user: null,
+    token: null,
     message: null,
     todos: [
       {
@@ -18,6 +20,19 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
+    case 'update_token':
+      const { token } = action;
+      return {
+        ...store,
+        token
+      }
+    case 'update_user':
+      const { user } = action;
+      return {
+        ...store,
+        user
+      }
+
     case 'add_task':
 
       const { id,  color } = action.payload
