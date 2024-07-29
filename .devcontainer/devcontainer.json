@@ -16,7 +16,11 @@
       }
     },
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode", "ms-python.autopep8"]
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-python.autopep8",
+        "rangav.vscode-thunder-client"
+      ]
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
