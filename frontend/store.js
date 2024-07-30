@@ -3,6 +3,7 @@ export const initialStore=()=>{
     user: null,
     token: null,
     message: null,
+    coins: [],
     todos: [
       {
         id: 1,
@@ -25,13 +26,20 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         token
-      }
+      };
     case 'update_user':
       const { user } = action;
       return {
         ...store,
         user
-      }
+      };
+    case 'load_coins':
+      const { coins } = action;
+      return {
+        ...store,
+        coins
+      };
+
 
     case 'add_task':
 
