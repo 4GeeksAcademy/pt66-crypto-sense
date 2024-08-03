@@ -27,7 +27,7 @@
 .hero form{
     padding: 8px;
     width: 80%;
-    background-color: white;
+    background-color: lightgrey;
     border-radius: 5px;
     font-size: 20px;
     display: flex;
@@ -42,6 +42,7 @@
     outline: none;
     border: none;
     padding-left: 10px;
+    background-color: transparent;
 }
 
 .hero button{

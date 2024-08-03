@@ -2,6 +2,7 @@ import "../cryptocoins/cryptocoins.css";
 import useGlobalReducer from "../../hooks/useGlobalReducer";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 const CryptoCoins = () => {
   const { store, dispatch } = useGlobalReducer();

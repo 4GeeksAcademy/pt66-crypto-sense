@@ -11,7 +11,7 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Coin from "./pages/Coin";
+import Coin from "./pages/coin/Coin";
 import CryptoCoins from "./pages/cryptocoins/CryptoCoins";
 
 
