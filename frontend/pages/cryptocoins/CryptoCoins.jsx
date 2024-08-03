@@ -6,24 +6,7 @@ import SearchBar from "../../components/searchBar/SearchBar";
 
 const CryptoCoins = () => {
   const { store, dispatch } = useGlobalReducer();
-  const [input, setInput] = useState("");
   const [filteredCoins, setFilteredCoins] = useState([]);
-
-  const inputHandler = (event) => {
-    setInput(event.target.value);
-  };
-
-  const searchHandler = (event) => {
-    event.preventDefault();
-    if (input.trim() === "") {
-      setFilteredCoins(store.coins);
-    } else {
-      const searchResults = store.coins.filter((coin) =>
-        coin.name.toLowerCase().includes(input.toLowerCase())
-      );
-      setFilteredCoins(searchResults);
-    }
-  };
 
   const options = {
     method: "GET",
@@ -59,6 +42,10 @@ const CryptoCoins = () => {
     loadData();
   }, [dispatch]);
 
+  const handleSearch = (searchResults) => {
+    setFilteredCoins(searchResults);
+  };
+
   return (
     <div className="CryptoCoins">
       <div className="hero">
@@ -66,20 +53,7 @@ const CryptoCoins = () => {
           All your Cryptos at... <br /> Crypto Sense
         </h1>
         <p>Find any Crypto that you would like to find more info about!</p>
-        <form onSubmit={searchHandler}>
-          <input
-            onChange={inputHandler}
-            list="coinlist"
-            type="text"
-            value={input}
-            placeholder="Search for crypto..."
-            required
-          />
-          <datalist id="coinlist">
-          {filteredCoins.map((coin, index) => ( <option key={index} value={coin.name} />))}
-          </datalist>
-          <button>Search</button>
-        </form>
+        <SearchBar coins={store.coins} onSearch={handleSearch} />
       </div>
       <div className="crypto-table">
         <div className="table-layout">
