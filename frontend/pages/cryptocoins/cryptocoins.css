@@ -1,0 +1,90 @@
+.CryptoCoins{
+    padding: 0px 10px;
+    padding-bottom: 100px;
+}
+
+.hero{
+    max-width: 600px;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+
+.hero h1{
+    font-size: 36px;
+}
+
+.hero p{
+    width: 75%;
+    line-height: 1.5;
+}
+
+/* search bar style */
+
+.hero form{
+    padding: 8px;
+    width: 80%;
+    background-color: lightgrey;
+    border-radius: 5px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px
+}
+
+.hero input{
+    flex: 1;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    background-color: transparent;
+}
+
+.hero button{
+    font-size: 16px;
+    border: none;
+    background: #000080;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.crypto-table{
+    width: 800px;
+    margin: auto;
+    background: navy;
+    border-radius: 15px;
+    border-bottom: none;
+    color: white;
+}
+
+.table-layout{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr;
+    padding: 15px 20px;
+    border-bottom: 1px solid #3c3c3c;
+}
+.marketcap{
+    text-align: right;
+}
+.table-layout:last-child{
+    border: none;
+}
+
+.table-layout div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-layout div img{
+    width: 35px;
+    align-items: center;
+}
