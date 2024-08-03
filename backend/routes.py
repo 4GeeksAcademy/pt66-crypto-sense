@@ -1,6 +1,8 @@
 import sqlalchemy as sa
 import requests
-from flask import Blueprint, request, jsonify, url_for, abort, current_app
+import os
+from dotenv import load_dotenv
+from flask import Blueprint, request, jsonify, url_for, abort
 from backend.models import db, User, Favorite
 from flask_cors import CORS
 from backend.utils import send_reset_email
@@ -8,9 +10,13 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity
 )
 
+load_dotenv()
+
 api = Blueprint('api', __name__, url_prefix='/api')
 
 COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
+CRYPTOCOMPARE_API_KEY = os.getenv('CRYPTOCOMPARE_API_KEY')
+CRYPTOCOMPARE_API_URL = "https://min-api.cryptocompare.com/data/v2/news/"
 
 # Allow CORS requests to this API
 CORS(api)
@@ -269,21 +275,42 @@ def reset_password(token):
         return jsonify({"message": "Your password has been updated"}), 200
     return jsonify({"message": "Invalid or expired token"}), 400
 
-@api.route('/search', methods=['GET'])
-def search_coins():
-    query = request.args.get('query', '')
-    if not query:
-        return jsonify({'error': 'Query parameter is required'}), 400
-
+@api.route('/coin_suggestions/<query>', methods=['GET'])
+def get_coin_suggestions(query):
     try:
-        response = requests.get(f'{COINGECKO_API_URL}/search?query={query}')
+        # Fetch coin suggestions from CoinGecko
+        coingecko_url = f"{COINGECKO_API_URL}/search?query={query}"
+        response = requests.get(coingecko_url)
+        if response.status_code != 200:
+            return jsonify({'error': 'CoinGecko API request failed'}), response.status_code
         
-        if response.status_code == 200:
-            return jsonify(response.json()), 200
-        elif response.status_code == 429:
-            return jsonify({'error': 'Rate limit exceeded. Please try again later.'}), 429
-        else:
-            return jsonify({'error': f'CoinGecko API error: {response.text}'}), response.status_code
+        coin_data = response.json()
+        return jsonify(coin_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    except requests.RequestException as e:
-        return jsonify({'error': f'Failed to fetch data from CoinGecko: {str(e)}'}), 500
+@api.route('/coin_news/<coin>', methods=['GET'])
+def get_coin_news(coin):
+    try:
+        # Fetch the coin details from CoinGecko using the symbol
+        coingecko_url = f"{COINGECKO_API_URL}/search?query={coin}"
+        response = requests.get(coingecko_url)
+        if response.status_code != 200:
+            return jsonify({'error': 'CoinGecko API request failed'}), response.status_code
+        
+        coin_data = response.json()
+        if not coin_data['coins']:
+            return jsonify({'error': 'Coin not found'}), 404
+
+        coin_name = coin_data['coins'][0]['name']
+
+        # Fetch news from CryptoCompare
+        cryptocompare_url = f"{CRYPTOCOMPARE_API_URL}?categories={coin_name}&api_key={CRYPTOCOMPARE_API_KEY}"
+        response = requests.get(cryptocompare_url)
+        if response.status_code != 200:
+            return jsonify({'error': 'CryptoCompare API request failed'}), response.status_code
+        
+        news_data = response.json()
+        return jsonify(news_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
