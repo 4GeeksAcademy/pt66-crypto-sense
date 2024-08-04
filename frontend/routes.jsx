@@ -11,9 +11,7 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Coin from "./pages/coin/Coin";
-import CryptoCoins from "./pages/cryptocoins/CryptoCoins";
-
+import Dashboard from "./pages/Dashboard";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -32,8 +30,7 @@ export const router = createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path= "/register" element={<Register />} />
         <Route path= "/login" element={<Login />} />
-        <Route path="/coin/:coinId" element={<Coin />} />CryptoCoins
-        <Route path="/cryptoCoins/" element={<CryptoCoins/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     )
 );
