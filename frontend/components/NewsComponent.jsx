@@ -47,14 +47,14 @@ const NewsComponent = () => {
         throw new Error('Network response was not ok');
       }
       const data = JSON.parse(responseText);
-      if (data && data.Data) {
+      if (data && data.articles) {
         if (loadMore) {
-          setNews(prevNews => [...prevNews, ...data.Data]);
+          setNews(prevNews => [...prevNews, ...data.articles]);
         } else {
-          setNews(data.Data);
+          setNews(data.articles);
           setDisplayCount(5);
         }
-        setHasMore(data.Data.length >= 5);
+        setHasMore(data.articles.length >= 5);
       } else {
         setNews([]);
         setHasMore(false);
@@ -132,6 +132,7 @@ const NewsComponent = () => {
                 <h3 className="news-title">{item.title}</h3>
                 <p className="news-source">{item.source_info.name}</p>
                 <p className="news-time">{formatTime(item.published_on)}</p>
+                <p className="news-body">{item.body}</p> {/* Display the body text */}
                 <a 
                   href={item.url} 
                   target="_blank" 
@@ -155,6 +156,7 @@ const NewsComponent = () => {
     </div>
   );
 };
+
 const formatTime = (timestamp) => {
   const now = new Date();
   const newsDate = new Date(timestamp * 1000);

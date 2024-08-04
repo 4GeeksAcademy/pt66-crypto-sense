@@ -311,6 +311,20 @@ def get_coin_news(coin):
             return jsonify({'error': 'CryptoCompare API request failed'}), response.status_code
         
         news_data = response.json()
-        return jsonify(news_data)
+
+        # Extract relevant data 
+        articles = []
+        for article in news_data.get('Data', []):
+            articles.append({
+                'id': article['id'],
+                'title': article['title'],
+                'source_info': article['source_info'],
+                'published_on': article['published_on'],
+                'imageurl': article.get('imageurl'),
+                'url': article['url'],
+                'body': article.get('body')  
+            })
+
+        return jsonify({'articles': articles})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
