@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Navbar = () => {
+  const { store } = useGlobalReducer();
+  const { token } = store;
+
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
@@ -16,8 +21,18 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/cryptocoins">Crypto Coins</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/favoritecoins">Portfolio</Link>
+            </li>
           </ul>
         </div>
+        {token && (  
+          <button className="logout">
+            <Link to="/logout" style={{ textDecoration: "inherit", color: "inherit" }}>
+              Logout
+            </Link>
+          </button>
+        )}
       </div>
     </nav>
   );

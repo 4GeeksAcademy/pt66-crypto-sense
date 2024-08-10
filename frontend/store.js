@@ -1,9 +1,12 @@
 export const initialStore=()=>{
+  const token = localStorage.getItem('token') || null;
+
   return{
     user: null,
-    token: null,
+    token: token,
     message: null,
     coins: [],
+    favorites: [],
     todos: [
       {
         id: 1,
@@ -22,11 +25,13 @@ export const initialStore=()=>{
 export default function storeReducer(store, action = {}) {
   switch(action.type){
     case 'update_token':
-      const { token } = action;
-      return {
-        ...store,
-        token
-      };
+      case 'update_token':
+        const { token } = action;
+        localStorage.setItem('token', token);  
+        return {
+          ...store,
+          token
+        };
     case 'update_user':
       const { user } = action;
       return {
@@ -39,7 +44,18 @@ export default function storeReducer(store, action = {}) {
         ...store,
         coins
       };
-
+    case 'add_favorite':
+      const { favoriteCoin } = action;
+      return {
+        ...store,
+        favorites: [...store.favorites, favoriteCoin]
+      };
+    case 'remove_favorite':
+      const { coinId } = action;
+      return {
+        ...store,
+        favorites: store.favorites.filter(coin => coin.id !== coinId)
+      };
 
     case 'add_task':
 

@@ -1,9 +1,9 @@
-.CryptoCoins{
+.CryptoCoins {
     padding: 0px 10px;
     padding-bottom: 100px;
 }
 
-.hero{
+.hero {
     max-width: 600px;
     margin: 80px auto;
     display: flex;
@@ -13,18 +13,18 @@
     gap: 30px;
 }
 
-.hero h1{
+.hero h1 {
     font-size: 36px;
 }
 
-.hero p{
+.hero p {
     width: 75%;
     line-height: 1.5;
 }
 
-/* search bar style */
+/* Search bar style */
 
-.hero form{
+.hero form {
     padding: 8px;
     width: 80%;
     background-color: lightgrey;
@@ -33,10 +33,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px
+    gap: 10px;
 }
 
-.hero input{
+.hero input {
     flex: 1;
     font-size: 16px;
     outline: none;
@@ -45,7 +45,7 @@
     background-color: transparent;
 }
 
-.hero button{
+.hero button {
     font-size: 16px;
     border: none;
     background: #000080;
@@ -55,36 +55,61 @@
     cursor: pointer;
 }
 
-.crypto-table{
-    width: 800px;
+.crypto-table {
+    width: 100%;
+    max-width: 800px;
     margin: auto;
     background: navy;
     border-radius: 15px;
-    border-bottom: none;
+    overflow: hidden; 
     color: white;
 }
 
-.table-layout{
+.table-header,
+.table-row {
     display: grid;
-    align-items: center;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr;
+    grid-template-columns: 0.5fr 0.5fr 2fr 1fr 1fr 1.5fr;
     padding: 15px 20px;
     border-bottom: 1px solid #3c3c3c;
 }
-.marketcap{
-    text-align: right;
-}
-.table-layout:last-child{
-    border: none;
+
+.table-header {
+    background: rgb(0, 0, 87);
+    font-weight: bold;
 }
 
-.table-layout div{
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row div {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.table-layout div img{
+.table-row div img {
     width: 35px;
+}
+
+.marketcap{
+    text-align: right;
+}
+
+.coin-link{
+    display: flex;
+    display: flex;
     align-items: center;
+    gap: 10px;
+}
+
+.coin-link img{
+    width: 35px;
+}
+
+i{
+    cursor: pointer;
+}
+i:hover{
+    color: gold;
 }

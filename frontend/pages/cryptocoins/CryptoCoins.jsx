@@ -1,12 +1,13 @@
 import "../cryptocoins/cryptocoins.css";
 import useGlobalReducer from "../../hooks/useGlobalReducer";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../../components/searchBar/SearchBar";
 
 const CryptoCoins = () => {
   const { store, dispatch } = useGlobalReducer();
   const [filteredCoins, setFilteredCoins] = useState([]);
+  const navigate = useNavigate();
 
   const options = {
     method: "GET",
@@ -30,7 +31,7 @@ const CryptoCoins = () => {
             type: "load_coins",
             coins: coinsBody,
           });
-          setFilteredCoins(coinsBody); // Set the initial filtered coins
+          setFilteredCoins(coinsBody); 
         } else {
           throw new Error(coinsResp.statusText || "Failed to fetch data");
         }
@@ -41,6 +42,42 @@ const CryptoCoins = () => {
 
     loadData();
   }, [dispatch]);
+
+  const handleFavorite = async (coinId) => {
+    if (!store.token) {
+      navigate("/login");
+      return;
+    }
+  
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/favorites`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${store.token}`,
+        },
+        body: JSON.stringify({
+          favorites: [{ coin_id: coinId }],
+        }),
+      });
+  
+      if (response.ok) {
+        const favoriteCoin = store.coins.find(coin => coin.id === coinId);
+        dispatch({
+          type: "add_favorite",
+          favoriteCoin,  // Make sure you're passing the full coin object
+        });
+        const data = await response.json();
+        console.log("Favorite added:", data);
+        alert("Favorite added!");
+      } else {
+        console.error("Failed to add favorite:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error adding favorite:", error);
+    }
+  };
 
   const handleSearch = (searchResults) => {
     setFilteredCoins(searchResults);
@@ -56,21 +93,25 @@ const CryptoCoins = () => {
         <SearchBar coins={store.coins} onSearch={handleSearch} />
       </div>
       <div className="crypto-table">
-        <div className="table-layout">
+        <div className="table-header">
+          <p> </p>
           <p>#</p>
           <p>Coin</p>
           <p>Price</p>
-          <p style={{ alignItems: "center" }}>24H Change</p>
+          <p>24H Change</p>
           <p className="marketcap">Market Cap</p>
         </div>
         {filteredCoins &&
           filteredCoins.slice(0, 10).map((coin, index) => (
-            <Link to={`/coin/${coin.id}`} className="table-layout" key={index}>
-              <p>{coin.market_cap_rank}</p>
+            <div className="table-row" key={index}>
               <div>
+                <i className="fa-regular fa-star" onClick={()=> handleFavorite(coin.id)}></i>
+              </div>
+              <p>{coin.market_cap_rank}</p>
+              <Link to={`/coin/${coin.id}`} className="coin-link">
                 <img src={coin.image} alt="" />
                 <p>{coin.name + " - " + coin.symbol}</p>
-              </div>
+              </Link>
               <p>{"$ " + coin.current_price.toLocaleString()}</p>
               <p
                 style={{
@@ -80,7 +121,7 @@ const CryptoCoins = () => {
                 {coin.price_change_percentage_24h.toFixed(2)}%
               </p>
               <p className="marketcap">$ {coin.market_cap.toLocaleString()}</p>
-            </Link>
+            </div>
           ))}
       </div>
     </div>
