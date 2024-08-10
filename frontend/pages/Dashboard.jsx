@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CoinSearch from '../components/CoinSearch';
+import CoinConverter from '../components/CoinConverter';
 import NewsComponent from '../components/NewsComponent';
-import '../styles/Dashboard.css'; // We'll create this CSS file next
+import '../styles/MyDashboard.css'; 
 
 const Dashboard = () => {
+  const [selectedCoin, setSelectedCoin] = useState('bitcoin'); // Defaults to Bitcoin
+
   return (
-    <div className="dashboard">
-      <h1>Cryptocurrency Dashboard</h1>
-      <div className="dashboard-content">
-        <NewsComponent />
-        {/* You can add other dashboard components here */}
-      </div>
+    <div className="my-dashboard">
+      <h1>My Cryptocurrency Dashboard</h1>
+      <CoinSearch setSelectedCoin={setSelectedCoin} />
+      <CoinConverter selectedCoin={selectedCoin} />
+      <NewsComponent selectedCoin={selectedCoin} />
     </div>
   );
 };

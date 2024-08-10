@@ -281,13 +281,28 @@ def get_coin_suggestions(query):
         # Fetch coin suggestions from CoinGecko
         coingecko_url = f"{COINGECKO_API_URL}/search?query={query}"
         response = requests.get(coingecko_url)
-        if response.status_code != 200:
-            return jsonify({'error': 'CoinGecko API request failed'}), response.status_code
+        response.raise_for_status()
         
         coin_data = response.json()
-        return jsonify(coin_data)
+        
+        # Filter coins that start with the query string and include logos
+        filtered_coins = [
+            {
+                'id': coin['id'],
+                'name': coin['name'],
+                'symbol': coin['symbol'],
+                'logo': coin['large']  # Assuming 'large' has the URL for the logo
+            } 
+            for coin in coin_data['coins'] 
+            if coin['name'].lower().startswith(query.lower())
+        ]
+
+        return jsonify({'coins': filtered_coins})
+    except requests.RequestException as e:
+        return jsonify({'error': f"API request failed: {str(e)}"}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 @api.route('/coin_news/<coin>', methods=['GET'])
 def get_coin_news(coin):
@@ -295,8 +310,7 @@ def get_coin_news(coin):
         # Fetch the coin details from CoinGecko using the symbol
         coingecko_url = f"{COINGECKO_API_URL}/search?query={coin}"
         response = requests.get(coingecko_url)
-        if response.status_code != 200:
-            return jsonify({'error': 'CoinGecko API request failed'}), response.status_code
+        response.raise_for_status()
         
         coin_data = response.json()
         if not coin_data['coins']:
@@ -307,8 +321,7 @@ def get_coin_news(coin):
         # Fetch news from CryptoCompare
         cryptocompare_url = f"{CRYPTOCOMPARE_API_URL}?categories={coin_name}&api_key={CRYPTOCOMPARE_API_KEY}"
         response = requests.get(cryptocompare_url)
-        if response.status_code != 200:
-            return jsonify({'error': 'CryptoCompare API request failed'}), response.status_code
+        response.raise_for_status()
         
         news_data = response.json()
 
@@ -326,5 +339,48 @@ def get_coin_news(coin):
             })
 
         return jsonify({'articles': articles})
+    except requests.RequestException as e:
+        return jsonify({'error': f"API request failed: {str(e)}"}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@api.route('/coin_logos/<coin_symbol>', methods=['GET'])
+def get_coin_logos(coin_symbol):
+    try:
+        coingecko_url = f"{COINGECKO_API_URL}/coins/markets"
+        params = {
+            'vs_currency': 'usd',
+            'ids': coin_symbol
+        }
+        response = requests.get(coingecko_url, params=params)
+        response.raise_for_status()
+        
+        coin_data = response.json()
+        if not coin_data or 'image' not in coin_data[0]:
+            return jsonify({'error': 'Logo not available'}), 404
+        
+        logo_url = coin_data[0]['image']
+        return jsonify({'logo': logo_url})
+    except requests.RequestException as e:
+        return jsonify({'error': f"API request failed: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@api.route('/convert/<from_coin_symbol>/<to_currency>', methods=['GET'])
+def get_conversion_rate(from_coin_symbol, to_currency):
+    try:
+        coingecko_url = f"{COINGECKO_API_URL}/simple/price?ids={from_coin_symbol}&vs_currencies={to_currency}"
+        response = requests.get(coingecko_url)
+        response.raise_for_status()
+        
+        price_data = response.json()
+        if from_coin_symbol in price_data and to_currency in price_data[from_coin_symbol]:
+            rate = price_data[from_coin_symbol][to_currency]
+            return jsonify({'rate': rate})
+        else:
+            return jsonify({'error': 'Conversion rate not available'}), 404
+    except requests.RequestException as e:
+        return jsonify({'error': f"API request failed: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
