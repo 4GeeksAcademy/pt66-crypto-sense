@@ -1,0 +1,110 @@
+.my-dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .my-dashboard h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .coin-search,
+  .coin-converter,
+  .news-component {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .coin-search input,
+  .coin-converter input,
+  .coin-converter select {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .coin-search .suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .coin-search .suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .coin-search .suggestions-list li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .news-component h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .news-list .news-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .news-list .news-item img.news-thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .news-list .news-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .news-list .news-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .news-list .news-source,
+  .news-list .news-time,
+  .news-list .news-body {
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  .see-more-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .see-more-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  

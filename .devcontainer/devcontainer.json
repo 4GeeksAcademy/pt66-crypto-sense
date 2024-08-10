@@ -19,7 +19,8 @@
       "extensions": [
         "esbenp.prettier-vscode",
         "ms-python.autopep8",
-        "rangav.vscode-thunder-client"
+        "rangav.vscode-thunder-client",
+        "Postman.postman-for-vscode"
       ]
     }
   },

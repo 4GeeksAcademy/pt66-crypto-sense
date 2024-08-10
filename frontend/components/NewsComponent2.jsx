@@ -6,6 +6,7 @@ const NewsComponent = ({ selectedCoin }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [displayCount, setDisplayCount] = useState(5);
+  const [hasMore, setHasMore] = useState(true);
   const [logoUrl, setLogoUrl] = useState(null);
 
   useEffect(() => {
@@ -15,20 +16,28 @@ const NewsComponent = ({ selectedCoin }) => {
     }
   }, [selectedCoin]);
 
-  const fetchNews = async (coin) => {
+  const fetchNews = async (coin, loadMore = false) => {
+    console.log(`Fetching news for ${coin}`);
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/coin_news/${coin}`);
+      const responseText = await response.text();
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
+      const data = JSON.parse(responseText);
       if (data && data.articles) {
-        setNews(data.articles);
-        setDisplayCount(5);
+        if (loadMore) {
+          setNews(prevNews => [...prevNews, ...data.articles]);
+        } else {
+          setNews(data.articles);
+          setDisplayCount(5);
+        }
+        setHasMore(data.articles.length >= 5);
       } else {
         setNews([]);
+        setHasMore(false);
       }
     } catch (error) {
       console.error('Error fetching news:', error);
@@ -42,6 +51,7 @@ const NewsComponent = ({ selectedCoin }) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/coin_logos/${coin}`);
       const data = await response.json();
+      console.log("Fetched logo data:", data);
       if (data.logo) {
         setLogoUrl(data.logo);
       } else {
@@ -54,6 +64,9 @@ const NewsComponent = ({ selectedCoin }) => {
 
   const handleSeeMore = () => {
     setDisplayCount(prevCount => prevCount + 5);
+    if (displayCount + 5 >= news.length) {
+      fetchNews(selectedCoin, true);
+    }
   };
 
   const formatTime = (timestamp) => {
@@ -73,14 +86,21 @@ const NewsComponent = ({ selectedCoin }) => {
 
   return (
     <div className="news-component">
-      <h2>
-        {logoUrl && <img src={logoUrl} alt={selectedCoin} width="20" style={{ marginRight: '5px' }} />} 
+      <h2 className="d-flex align-items-center mb-3">
+        {logoUrl && (
+          <img 
+            src={logoUrl} 
+            alt={selectedCoin} 
+            className="me-2"
+            style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+          />
+        )}
         {selectedCoin} News
-      </h2> 
-
+      </h2>
+      
       {loading && <div>Loading...</div>}
       {error && <div className="error">{error}</div>}
-
+      
       <div className="news-list">
         {news.length > 0 ? (
           news.slice(0, displayCount).map((item) => (
@@ -95,7 +115,7 @@ const NewsComponent = ({ selectedCoin }) => {
                 <h3 className="news-title">{item.title}</h3>
                 <p className="news-source">{item.source_info.name}</p>
                 <p className="news-time">{formatTime(item.published_on)}</p>
-                <p className="news-body">{item.body}</p>
+                <p className="news-body">{item.body}</p> {/* Display the body text */}
                 <a 
                   href={item.url} 
                   target="_blank" 
@@ -111,7 +131,7 @@ const NewsComponent = ({ selectedCoin }) => {
           <p>No news available for {selectedCoin}</p>
         )}
       </div>
-      {news.length > displayCount && (
+      {hasMore && news.length > 0 && (
         <button className="see-more-btn" onClick={handleSeeMore}>
           See more
         </button>
