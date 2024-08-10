@@ -37,7 +37,7 @@ const Login = () => {
       }
       dispatch({ type: "update_user", user: data.user });
       dispatch({ type: "update_token", token: data.token });
-      navigate("/private");
+      navigate("/dashboard");
     } catch (error) {
       setError("Invalid Email or Password.");
     }
