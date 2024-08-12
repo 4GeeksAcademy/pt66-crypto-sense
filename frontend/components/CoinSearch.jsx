@@ -20,7 +20,7 @@ const CoinSearch = ({ setSelectedCoin }) => {
   };
 
   // Debounce the fetchCoinSuggestions function
-  const debouncedFetchCoinSuggestions = useCallback(debounce(fetchCoinSuggestions, 500), []);
+  const debouncedFetchCoinSuggestions = useCallback(debounce(fetchCoinSuggestions, 1000), []);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
