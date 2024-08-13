@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/CoinConverter.css'
 
 const fiatCurrencies = [
   { code: 'USD', name: 'United States Dollar', flag: '🇺🇸' },

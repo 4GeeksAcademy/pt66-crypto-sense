@@ -49,34 +49,64 @@ const CryptoCoins = () => {
       return;
     }
   
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/favorites`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${store.token}`,
-        },
-        body: JSON.stringify({
-          favorites: [{ coin_id: coinId }],
-        }),
-      });
+    const isFavorite = store.favorites.some((coin) => coin.id === coinId);
   
-      if (response.ok) {
-        const favoriteCoin = store.coins.find(coin => coin.id === coinId);
-        dispatch({
-          type: "add_favorite",
-          favoriteCoin,  // Make sure you're passing the full coin object
-        });
-        const data = await response.json();
-        console.log("Favorite added:", data);
-        alert("Favorite added!");
-      } else {
-        console.error("Failed to add favorite:", response.statusText);
+    if (isFavorite) {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/favorites/${coinId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${store.token}`,
+            },
+          }
+        );
+  
+        if (response.ok) {
+          dispatch({ type: "remove_favorite", coinId });
+          alert("Favorite removed!");
+          console.log("Dispatching remove_favorite with coinId:", coinId);
+        } else {
+          console.error("Failed to remove favorite:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error removing favorite:", error);
       }
-    } catch (error) {
-      console.error("Error adding favorite:", error);
+    } else {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/favorites`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${store.token}`,
+            },
+            body: JSON.stringify({
+              favorites: [{ coin_id: coinId }],
+            }),
+          }
+        );
+  
+        if (response.ok) {
+          const favoriteCoin = store.coins.find((coin) => coin.id === coinId);
+          dispatch({
+            type: "add_favorite",
+            favoriteCoin,
+          });
+          const data = await response.json();
+          console.log("Favorite added:", data);
+          alert("Favorite added!");
+        } else {
+          console.error("Failed to add favorite:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error adding favorite:", error);
+      }
     }
+    console.log("Handling favorite for coinId:", coinId);
+    console.log("Current favorites:", store.favorites);
   };
 
   const handleSearch = (searchResults) => {

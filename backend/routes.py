@@ -190,7 +190,7 @@ def get_favorite(id):
 
 
     
-@api.route('/favorites/<int:id>', methods=['DELETE'])
+@api.route('/favorites/<string:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
     try:
@@ -200,7 +200,7 @@ def delete_favorite(id):
         if not current_user:
             return jsonify({'error': 'User not authenticated or not found'}), 404
 
-        favorite = Favorite.query.filter_by(id=id, user_id=current_user.id).first()
+        favorite = Favorite.query.filter_by(coin_id=id, user_id=current_user.id).first()
         
         if not favorite:
             return jsonify({'error': f'Favorite with id {id} not found for the current user or you do not have permission to delete it'}), 404
