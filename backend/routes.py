@@ -14,12 +14,15 @@ load_dotenv()
 
 api = Blueprint('api', __name__, url_prefix='/api')
 
+COINGECKO_API_KEY = os.getenv('COINGECKO_API_KEY')
 COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
+
 CRYPTOCOMPARE_API_KEY = os.getenv('CRYPTOCOMPARE_API_KEY')
 CRYPTOCOMPARE_API_URL = "https://min-api.cryptocompare.com/data/v2/news/"
 
 # Allow CORS requests to this API
 CORS(api)
+
 
 @api.route('/users/<int:id>', methods=['GET'])
 @jwt_required()
@@ -278,9 +281,12 @@ def reset_password(token):
 @api.route('/coin_suggestions/<query>', methods=['GET'])
 def get_coin_suggestions(query):
     try:
+        HEADERS = {
+            'Authorization': f'Bearer {COINGECKO_API_KEY}'
+        }
         # Fetch coin suggestions from CoinGecko
         coingecko_url = f"{COINGECKO_API_URL}/search?query={query}"
-        response = requests.get(coingecko_url)
+        response = requests.get(coingecko_url, headers=HEADERS)  # Include headers here
         response.raise_for_status()
         
         coin_data = response.json()
@@ -307,9 +313,12 @@ def get_coin_suggestions(query):
 @api.route('/coin_news/<coin>', methods=['GET'])
 def get_coin_news(coin):
     try:
+        HEADERS = {
+            'Authorization': f'Bearer {COINGECKO_API_KEY}'
+        }
         # Fetch the coin details from CoinGecko using the symbol
         coingecko_url = f"{COINGECKO_API_URL}/search?query={coin}"
-        response = requests.get(coingecko_url)
+        response = requests.get(coingecko_url, headers=HEADERS)
         response.raise_for_status()
         
         coin_data = response.json()
@@ -369,8 +378,11 @@ def get_coin_logos(coin_symbol):
 @api.route('/convert/<from_coin_symbol>/<to_currency>', methods=['GET'])
 def get_conversion_rate(from_coin_symbol, to_currency):
     try:
+        HEADERS = {
+            'Authorization': f'Bearer {COINGECKO_API_KEY}'
+        }
         coingecko_url = f"{COINGECKO_API_URL}/simple/price?ids={from_coin_symbol}&vs_currencies={to_currency}"
-        response = requests.get(coingecko_url)
+        response = requests.get(coingecko_url, headers=HEADERS)
         response.raise_for_status()
         
         price_data = response.json()

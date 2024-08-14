@@ -1,66 +1,13 @@
-.news-component {
-  padding: 20px;
-  border: none;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.news-body {
+  max-height: 4.8em; /* Show only 4 lines of text */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limit the number of lines to 4 */
+  -webkit-box-orient: vertical;
 }
-
-.news-component h2 {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.news-component .coin-logo {
-  width: 32px;
-  height: 32px;
-  margin-right: 10px;
-}
-
-.news-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.news-item {
-  display: flex;
-  gap: 20px;
-}
-
-.news-thumbnail {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.news-content {
-  flex: 1;
-}
-
-.news-title {
-  font-size: 18px;
-  margin: 0;
-}
-
-.news-source, .news-time, .news-body {
-  margin: 5px 0;
-}
-
 .full-article-link {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.see-more-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
 }
