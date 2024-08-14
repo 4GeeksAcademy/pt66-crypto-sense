@@ -29,13 +29,13 @@ export const router = createBrowserRouter(
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
+        {/* <Route path= "/" element={<Home />} /> */}
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
         <Route path= "/register" element={<Register />} />
         <Route path= "/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/cryptocoins" element={<CryptoCoins />} />
+        <Route path="/" element={<CryptoCoins />} />
         <Route path="/coin/:coinId" element={<Coin />} />
         <Route path="/favoritecoins" element={<FavoriteCoins />} />
         <Route path="/logout" element={<Logout />} />

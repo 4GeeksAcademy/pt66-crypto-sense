@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from 'chart.js';
 import "../coin/coin.css";
+import CoinConverter from "../../components/CoinConverter";
+import NewsComponent from "../../components/NewsComponent";
 
 // Register Chart.js modules 
 ChartJS.register(...registerables);
@@ -71,7 +73,8 @@ const Coin = () => {
   }
 
   return (
-    <div className="coin">
+    <div className="coinPage">
+      <div className="coin">
       <h1>{coin.name}</h1>
       <img src={coin.image.large} alt={coin.name} />
       <p>Symbol: {coin.symbol}</p>
@@ -83,6 +86,11 @@ const Coin = () => {
       <div className="chart">
         <h2>Price Chart (Last 30 Days)</h2>
         {chartData && <Line data={chartData} />}
+      </div>
+      </div>
+      <div className="components">
+        <CoinConverter selectedCoin={coinId} />
+        <NewsComponent selectedCoin={coinId} />
       </div>
     </div>
   );

@@ -29,8 +29,7 @@ export const FavoriteCoins = () => {
   }, [favorites]);
 
   const handleRemoveFavorite = (coinId) => {
-    const updatedFavorites = favorites.filter((fav) => fav.coin_id !== coinId);
-    dispatch({ type: "remove_favorite", favorites: updatedFavorites });
+    dispatch({ type: "remove_favorite", coinId });
   };
 
   return (

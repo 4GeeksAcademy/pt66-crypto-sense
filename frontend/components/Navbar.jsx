@@ -16,23 +16,25 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/dashboard">Dashboard</Link>
+              <Link className="nav-link" aria-current="page" to="/">Crypto Coins</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/cryptocoins">Crypto Coins</Link>
-            </li>
-            <li className="nav-item">
+            {token && ( <li className="nav-item">
               <Link className="nav-link" to="/favoritecoins">Portfolio</Link>
-            </li>
+            </li>)}
           </ul>
         </div>
-        {token && (  
+        {token ? (  
           <button className="logout">
             <Link to="/logout" style={{ textDecoration: "inherit", color: "inherit" }}>
               Logout
             </Link>
           </button>
-        )}
+        ) : <button className="logout">
+        <Link to="/login" style={{ textDecoration: "inherit", color: "inherit" }}>
+          Login
+        </Link>
+      </button>
+      }
       </div>
     </nav>
   );
