@@ -1,0 +1,67 @@
+:root {
+  --primary-color: #0885e8;
+  --secondary-color: #143361;
+  --background-dark: #10111c;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  
+  /* Font family variables */
+  --font-atkinson: 'Atkinson Hyperlegible', sans-serif;
+  --font-kanit: 'Kanit', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-roboto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font weight classes for Atkinson Hyperlegible */
+.atkinson {
+  font-family: var(--font-atkinson);
+}
+.atkinson-regular { font-weight: 400; }
+.atkinson-bold { font-weight: 700; }
+.atkinson-italic { font-style: italic; }
+
+/* Font weight classes for Kanit */
+.kanit {
+  font-family: var(--font-kanit);
+}
+.kanit-thin { font-weight: 100; }
+.kanit-extralight { font-weight: 200; }
+.kanit-light { font-weight: 300; }
+.kanit-regular { font-weight: 400; }
+.kanit-medium { font-weight: 500; }
+.kanit-semibold { font-weight: 600; }
+.kanit-bold { font-weight: 700; }
+.kanit-extrabold { font-weight: 800; }
+.kanit-black { font-weight: 900; }
+
+/* Font weight classes for Roboto */
+.roboto {
+  font-family: var(--font-roboto);
+}
+.roboto-thin { font-weight: 100; }
+.roboto-light { font-weight: 300; }
+.roboto-regular { font-weight: 400; }
+.roboto-medium { font-weight: 500; }
+.roboto-bold { font-weight: 700; }
+.roboto-black { font-weight: 900; }
+
+/* Italic classes */
+.italic { font-style: italic; }
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}

@@ -1,0 +1,110 @@
+/* LandingPage.css */
+
+.landing-page {
+  background-color: #10111c;
+  min-height: 200vh;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  background-color: rgba(16, 17, 28, 0.9);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-buttons button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sign-in {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white !important;
+}
+
+.try-free {
+  background-color: #0885e8;
+  color: white;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.promo-text {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.sub-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.cta-button {
+  background-color: #0885e8;
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.coins-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.crypto-icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.dashboard-container {
+  margin-top: 4rem;
+  padding: 0 2rem;
+}
+
+.dashboard-hero-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .promo-text {
+    font-size: 3rem;
+  }
+
+  .coins-container {
+    display: none;
+  }
+}
