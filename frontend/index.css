@@ -65,3 +65,151 @@ body {
   background-color: var(--primary-color);
   color: var(--text-light);
 }
+
+.logo-image {
+  height: 3rem;
+  width: auto;
+  margin: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: rgba(16, 17, 28, 0.98);
+}
+
+.navbar .container {
+  width: 100%;
+  padding-left: 0; 
+  padding-right: 0.5rem; 
+}
+
+.brand-nav {
+  padding-left: 0.5rem;
+}
+
+.navbar .btn {
+  margin-left: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    padding-left: 1rem; 
+    padding-right: 1rem;
+  }
+
+  .navbar .container {
+    padding-left: 0; 
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .navbar-toggler {
+    margin-right: 0; /* Remove margin from toggler button */
+  }
+
+  .navbar-collapse {
+    padding-top: 0.5rem;
+  }
+
+  .navbar-nav {
+    margin-right: 0;
+  }
+
+  .navbar .btn {
+    margin-top: 0.5rem;
+    margin-left: 0; /* Remove left margin on small screens */
+    width: 100%;
+  }
+}
+
+.nav-buttons button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sign-in {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white !important;
+}
+
+.try-free {
+  background-color: #0885e8;
+  color: white;
+}
+
+.navbar-nav {
+  margin-right: auto;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #fff !important;
+}
+
+.navbar .btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.navbar .btn-primary {
+  background-color: #0885e8;
+  border-color: #0885e8;
+}
+
+.navbar .btn-outline-light {
+  color: #fff;
+  border-color: #fff;
+}
+
+.navbar .btn-outline-light:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+@media (min-width: 992px) {
+  .navbar .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar .container {
+    padding-right: 1rem;
+  }
+  
+  .navbar-nav {
+    margin-right: 0;
+  }
+  
+  .navbar .btn {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
