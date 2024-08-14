@@ -37,7 +37,7 @@ export const router = createBrowserRouter(
         <Route path= "/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={< Landing/>} />
-        <Route path="/landing" element={< Landing/>} />
+        <Route path="/home" element={< CryptoCoins/>} />
         <Route path="/coin/:coinId" element={<Coin />} />
         <Route path="/favoritecoins" element={<FavoriteCoins />} />
         <Route path="/logout" element={<Logout />} />

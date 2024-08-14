@@ -1,9 +1,8 @@
 export const initialStore=()=>{
-  const token = localStorage.getItem('token') || null;
 
   return{
     user: null,
-    token: token,
+    token: null,
     message: null,
     coins: [],
     favorites: [],

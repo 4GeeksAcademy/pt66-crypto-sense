@@ -1,17 +1,20 @@
-import { Link,useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import "../index.css"
+import Logout from "./Logout";
 
 export const Navbar = () => {
   const location = useLocation();
   const { store, dispatch } = useGlobalReducer();
   const { token } = store;
+  const navigate = useNavigate();
 
   const isLandingPage = ['/', '/login', '/register'].includes(location.pathname);
 
   const handleLogout = () => {
     dispatch({ type: 'update_token', token: null });
     dispatch({ type: 'update_user', user: null });
+    navigate("/login")
   };
 
   return (
@@ -26,11 +29,14 @@ export const Navbar = () => {
           {!isLandingPage && token ? (
             <>
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/favoritecoins">Portfolio</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/home">Homepage</Link>
                 </li>
               </ul>
               <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>

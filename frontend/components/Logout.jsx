@@ -12,8 +12,8 @@ const Logout = () => {
     dispatch({ type: 'update_token', token: null });
     dispatch({ type: 'update_user', user: null });
 
-    navigate("/login");
-  }, [dispatch, navigate]);
+    //navigate("/login");
+  }, []);
 
   return null;
 };

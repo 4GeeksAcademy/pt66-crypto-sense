@@ -38,7 +38,7 @@ const Register = () => {
       if (!response.ok) {
         throw new Error(data.message || "Registration failed");
       }
-      console.log(data.message);
+      console.log(data);
       navigate("/login");
     } catch (error) {
       console.log("Error", error.message);
