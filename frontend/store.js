@@ -1,11 +1,15 @@
+import Cookies from 'js-cookie';
+
 export const initialStore=()=>{
+  const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const storedToken = Cookies.get('token') || null;
 
   return{
     user: null,
-    token: null,
+    token: storedToken,
     message: null,
     coins: [],
-    favorites: [],
+    favorites: storedFavorites,
     todos: [
       {
         id: 1,
@@ -24,13 +28,13 @@ export const initialStore=()=>{
 export default function storeReducer(store, action = {}) {
   switch(action.type){
     case 'update_token':
-      case 'update_token':
-        const { token } = action;
-        localStorage.setItem('token', token);  
-        return {
-          ...store,
-          token
-        };
+      const { token } = action;
+      Cookies.set('token', token || '', { expires: 1 }); // Expires in 1 day
+      return {
+        ...store,
+        token
+      };
+
     case 'update_user':
       const { user } = action;
       return {
@@ -43,17 +47,22 @@ export default function storeReducer(store, action = {}) {
         ...store,
         coins
       };
-    case 'add_favorite':
+      case'add_favorite':
       const { favoriteCoin } = action;
+      const updatedFavorites = [...store.favorites, favoriteCoin];
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       return {
         ...store,
-        favorites: [...store.favorites, favoriteCoin]
+        favorites: updatedFavorites
       };
-    case 'remove_favorite':
+
+    case'remove_favorite':
       const { coinId } = action;
+      const filteredFavorites = store.favorites.filter(coin => coin.id !== coinId);
+      localStorage.setItem('favorites', JSON.stringify(filteredFavorites));
       return {
         ...store,
-        favorites: store.favorites.filter(coin => coin.id !== coinId)
+        favorites: filteredFavorites
       };
 
     case 'add_task':

@@ -1,59 +1,59 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .register {
   height: 100vh;
-  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 
-.register .card {
+.register .registerCard {
   display: flex;
   flex-direction: row-reverse;
   background-color: white;
-  width: 50%;
+  width: 90%;
+  max-width: 1000px;
   height: 600px;
+  margin: 400px;
   border-radius: 10px;
   overflow: hidden;
   border: none;
-  box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
-  -webkit-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
-  -moz-box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.42);
+  box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5);
 }
 
-.register .card .left {
+.register .registerCard .left {
   flex: 1;
-  background: linear-gradient(#1f235e77, #3f458b77),
+  flex: 1;
+  background: linear-gradient(
+    135deg,
+    #24263e59 0%,
+    #15172680 30%,
+    #1213207e 100%
+  ),
     url("https://images.pexels.com/photos/6771152/pexels-photo-6771152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
       center;
   background-size: cover;
   padding: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 30px;
   color: white;
 }
 
-.register .card .left h1 {
-  font-size: 100px;
-  line-height: 100px;
+.register .registerCard .left h1 {
+  font-size: 3rem;
+  line-height: 1.2;
 }
 
-.register .card .left p {
-  font-size: 20px;
+.register .registerCard .left p {
+  font-size: 1.25rem;
 }
 
-.register .card .left span {
-  font-size: 15px;
+.register .registerCard .left span {
+  font-size: 1rem;
 }
 
-.register .card .left button {
+.register .registerCard .left button {
   width: 50%;
   padding: 10px;
   background-color: white;
@@ -64,32 +64,43 @@
   border-radius: 5px;
 }
 
-.register .card .right {
+.register .registerCard .right {
   flex: 1;
   padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 50px;
 }
 
-.register .card .right h1 {
-  color: navy;
+.register .registerCard .right h1 {
+  background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem; 
 }
 
-.register .card .right form {
+.register .registerCard .right form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
   gap: 30px;
 }
 
-.register .card .right form input {
+.register .registerCard .right form input {
   border: none;
   border-bottom: 1px solid lightgray;
-  padding: 10px 10px;
+  background: transparent;
+  padding: 10px;
+  font-size: 1rem;
 }
 
-.register .card .right form button {
+.register .registerCard .right form button {
   width: 50%;
   padding: 10px;
   color: white;

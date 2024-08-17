@@ -11,6 +11,7 @@
     align-items: center;
     text-align: center;
     gap: 30px;
+    color: white;
 }
 
 .hero h1 {
@@ -22,7 +23,6 @@
     line-height: 1.5;
 }
 
-/* Search bar style */
 
 .hero form {
     padding: 8px;
@@ -48,20 +48,28 @@
 .hero button {
     font-size: 16px;
     border: none;
-    background: #000080;
+    background: linear-gradient(135deg,
+            #24263e 0%,
+            #151726 30%,
+            #1a1b2e 100%);
     color: white;
     padding: 10px 30px;
     border-radius: 5px;
     cursor: pointer;
 }
 
+
 .crypto-table {
     width: 100%;
     max-width: 800px;
     margin: auto;
-    background: navy;
+    background: linear-gradient(135deg,
+            #24263e 0%,
+            #151726 30%,
+            #1a1b2e 100%);
+    box-shadow: 0px 0px 30px 8px rgba(49, 49, 49, 0.5);
     border-radius: 15px;
-    overflow: hidden; 
+    overflow: hidden;
     color: white;
 }
 
@@ -74,7 +82,10 @@
 }
 
 .table-header {
-    background: rgb(0, 0, 87);
+    background: linear-gradient(135deg,
+            #24263e 0%,
+
+            #1a1b2e 100%);
     font-weight: bold;
 }
 
@@ -92,24 +103,25 @@
     width: 35px;
 }
 
-.marketcap{
+.marketcap {
     text-align: right;
 }
 
-.coin-link{
+.coin-link {
     display: flex;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.coin-link img{
+.coin-link img {
     width: 35px;
 }
 
-i{
+i {
     cursor: pointer;
 }
-i:hover{
+.fa-solid{
     color: gold;
 }
+
