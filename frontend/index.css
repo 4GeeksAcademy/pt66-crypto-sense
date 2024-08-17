@@ -1,3 +1,11 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 :root {
   --primary-color: #0885e8;
   --secondary-color: #143361;
@@ -16,6 +24,12 @@ body {
   font-family: var(--font-roboto);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(
+        135deg,
+        #24263e 0%,
+        #151726 30%,
+        #121320 100%
+      );
 }
 
 /* Font weight classes for Atkinson Hyperlegible */

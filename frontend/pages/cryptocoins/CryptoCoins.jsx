@@ -7,6 +7,7 @@ import SearchBar from "../../components/searchBar/SearchBar";
 const CryptoCoins = () => {
   const { store, dispatch } = useGlobalReducer();
   const [filteredCoins, setFilteredCoins] = useState([]);
+  const [favorites, setFavorites] = useState({}); // Track favorites by coin ID
   const navigate = useNavigate();
 
   const options = {
@@ -27,11 +28,15 @@ const CryptoCoins = () => {
 
         if (coinsResp.ok) {
           const coinsBody = await coinsResp.json();
-          dispatch({
-            type: "load_coins",
-            coins: coinsBody,
-          });
-          setFilteredCoins(coinsBody); 
+          dispatch({ type: "load_coins", coins: coinsBody });
+          setFilteredCoins(coinsBody);
+
+          // Initialize favorites state
+          const favoriteCoins = store.favorites.reduce((acc, coin) => {
+            acc[coin.id] = true;
+            return acc;
+          }, {});
+          setFavorites(favoriteCoins);
         } else {
           throw new Error(coinsResp.statusText || "Failed to fetch data");
         }
@@ -41,18 +46,20 @@ const CryptoCoins = () => {
     };
 
     loadData();
-  }, [dispatch]);
+  }, [dispatch, store.favorites]);
 
   const handleFavorite = async (coinId) => {
     if (!store.token) {
       navigate("/login");
       return;
     }
-  
-    const isFavorite = store.favorites.some((coin) => coin.id === coinId);
-  
-    if (isFavorite) {
-      try {
+
+    const isFavorite = favorites[coinId] || false;
+    const updatedFavorites = { ...favorites, [coinId]: !isFavorite };
+
+    try {
+      if (isFavorite) {
+        // Remove favorite
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/favorites/${coinId}`,
           {
@@ -62,19 +69,16 @@ const CryptoCoins = () => {
             },
           }
         );
-  
+
         if (response.ok) {
           dispatch({ type: "remove_favorite", coinId });
-          alert("Favorite removed!");
-          console.log("Dispatching remove_favorite with coinId:", coinId);
+          setFavorites(updatedFavorites);
         } else {
           console.error("Failed to remove favorite:", response.statusText);
+          alert(`Error removing favorite: ${response.statusText}`);
         }
-      } catch (error) {
-        console.error("Error removing favorite:", error);
-      }
-    } else {
-      try {
+      } else {
+        // Add favorite
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/favorites`,
           {
@@ -88,26 +92,22 @@ const CryptoCoins = () => {
             }),
           }
         );
-  
+
         if (response.ok) {
           const favoriteCoin = store.coins.find((coin) => coin.id === coinId);
-          dispatch({
-            type: "add_favorite",
-            favoriteCoin,
-          });
-          const data = await response.json();
-          console.log("Favorite added:", data);
-          alert("Favorite added!");
+          dispatch({ type: "add_favorite", favoriteCoin });
+          setFavorites(updatedFavorites);
         } else {
           console.error("Failed to add favorite:", response.statusText);
+          alert(`Error adding favorite: ${response.statusText}`);
         }
-      } catch (error) {
-        console.error("Error adding favorite:", error);
       }
+    } catch (error) {
+      console.error("Error handling favorite:", error);
+      alert("An error occurred while handling your favorite.");
     }
-    console.log("Handling favorite for coinId:", coinId);
-    console.log("Current favorites:", store.favorites);
   };
+
 
   const handleSearch = (searchResults) => {
     setFilteredCoins(searchResults);
@@ -135,7 +135,10 @@ const CryptoCoins = () => {
           filteredCoins.slice(0, 10).map((coin, index) => (
             <div className="table-row" key={index}>
               <div>
-                <i className="fa-regular fa-star" onClick={()=> handleFavorite(coin.id)}></i>
+                <i
+                  className={favorites[coin.id] ? 'fa-solid fa-star' : 'fa-regular fa-star'}
+                  onClick={() => handleFavorite(coin.id)}
+                ></i>
               </div>
               <p>{coin.market_cap_rank}</p>
               <Link to={`/coin/${coin.id}`} className="coin-link">

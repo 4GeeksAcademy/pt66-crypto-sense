@@ -47,7 +47,7 @@ const Register = () => {
 
   return (
     <div className="register">
-      <div className="card">
+      <div className="registerCard">
         <div className="left">
           <h1>Crypto Sense</h1>
           <p>
