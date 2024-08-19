@@ -25,7 +25,7 @@
 
 .hero-content {
   position: relative;
-  z-index: 3; /* Higher than coins-container */
+  z-index: 3;
 }
 
 .promo-text {

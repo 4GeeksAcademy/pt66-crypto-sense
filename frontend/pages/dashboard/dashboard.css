@@ -1,0 +1,189 @@
+.dashboard {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.dashboard.dark {
+  background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
+  color: #e2e8f0;
+}
+
+.dashboard-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-main {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.portfolio-chart {
+  width: 60%;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.portfolio-chart {
+  width: 60%;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chart-container {
+    position: relative;
+    height: 90%; 
+    background: none;
+}
+
+.dark .portfolio-chart {
+  background-color: #10111c;
+}
+
+.side-components {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-component,
+.converter-component {
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.dark .news-component,
+.dark .converter-component {
+  background-color: #10111c;
+}
+
+.assets-list {
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.dark .assets-list {
+  background-color: #10111c;
+}
+
+.assets-list table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.assets-list th,
+.assets-list td {
+  text-align: left;
+  padding: 12px;
+}
+
+.dark .assets-list th,
+.dark .assets-list td {
+  border-bottom: 1px solid #2d3748;
+}
+
+.assets-list th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.dark .assets-list th {
+  background-color: #1a1b2e;
+  color: #a0aec0;
+}
+
+.assets-list tr:hover {
+  cursor: pointer;
+}
+
+.dark .assets-list tr:hover {
+  background-color: #1a1b2e;
+}
+
+.assets-list img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.coin-symbol {
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
+
+.dark .coin-symbol {
+  color: #a0aec0;
+}
+
+.positive {
+  color: #48bb78;
+}
+
+.negative {
+  color: #f56565;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #3182ce;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.875rem;
+}
+
+.btn-active {
+  background-color: #4a5568;
+}
+
+@media (max-width: 768px) {
+  .dashboard-main {
+    flex-direction: column;
+  }
+
+  .portfolio-chart,
+  .side-components {
+    width: 100%;
+  }
+
+  .assets-list {
+    padding: 10px;
+  }
+
+  .assets-list th,
+  .assets-list td {
+    padding: 8px;
+  }
+}
+

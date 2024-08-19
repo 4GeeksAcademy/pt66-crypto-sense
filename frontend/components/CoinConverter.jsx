@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../components/ThemeContext';
 import '../styles/CoinConverter.css'
 
 const fiatCurrencies = [
@@ -26,24 +27,18 @@ const CoinConverter = ({ selectedCoin, logoUrl }) => {
   const [amount, setAmount] = useState(1);
   const [currency, setCurrency] = useState('USD');
   const [conversionRate, setConversionRate] = useState(null);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     if (selectedCoin) {
       fetchConversionRate(selectedCoin, currency);
     }
-  }, [selectedCoin]);
-
-  useEffect(() => {
-    if (selectedCoin) {
-      fetchConversionRate(selectedCoin, currency);
-    }
-  }, [currency]);
+  }, [selectedCoin, currency]);
 
   const fetchConversionRate = async (coin, fiat) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/convert/${coin}/${fiat.toLowerCase()}`);
-      const contentType = response.headers.get('content-type');
-      if (response.ok && contentType && contentType.includes('application/json')) {
+      if (response.ok) {
         const data = await response.json();
         if (data.rate) {
           setConversionRate(data.rate);
@@ -52,8 +47,7 @@ const CoinConverter = ({ selectedCoin, logoUrl }) => {
           setConversionRate(null);
         }
       } else {
-        console.error('Error fetching conversion rate: Non-JSON response or network error');
-        setConversionRate(null);
+        throw new Error('Network response was not ok');
       }
     } catch (error) {
       console.error('Error fetching conversion rate:', error);
@@ -79,63 +73,50 @@ const CoinConverter = ({ selectedCoin, logoUrl }) => {
   };
 
   return (
-    <div className="card p-3">
-      <form>
-        <div className="form-group">
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text">
-                {logoUrl ? <img src={logoUrl} alt={selectedCoin} width="20" /> : (cryptocurrencies.find((c) => c.code === selectedCoin)?.icon || '₿')}
-              </span>
-            </div>
-            <input
-              type="number"
-              className="form-control"
-              value={amount}
-              onChange={handleAmountChange}
-              placeholder="Amount"
-            />
+    <div className={`coin-converter ${isDarkMode ? 'dark' : 'light'}`}>
+      <h3 className="converter-title">Currency Converter</h3>
+      <div className="converter-form">
+        <div className="input-group">
+          <input
+            type="number"
+            value={amount}
+            onChange={handleAmountChange}
+            className="amount-input"
+          />
+          <div className="currency-select">
+            <span className="currency-icon">
+              {logoUrl ? <img src={logoUrl} alt={selectedCoin} width="20" /> : (cryptocurrencies.find((c) => c.code === selectedCoin)?.icon || '₿')}
+            </span>
+            <span>{selectedCoin?.toUpperCase()}</span>
           </div>
         </div>
-        <button type="button" className="btn btn-outline-primary mb-3" onClick={handleInvert}>
-          ⟷
-        </button>
-        <div className="form-group">
-          <div className="input-group">
-            <select
-              className="form-control"
-              value={currency}
-              onChange={handleCurrencyChange}
-            >
-              <optgroup label="Fiat Currency">
-                {fiatCurrencies.map((curr) => (
-                  <option key={curr.code} value={curr.code}>
-                    {curr.flag} {curr.code.toUpperCase()} - {curr.name}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="Cryptocurrency">
-                {cryptocurrencies.map((curr) => (
-                  <option key={curr.code} value={curr.code}>
-                    {curr.icon} {curr.code.toUpperCase()} - {curr.name}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
-            <input
-              type="text"
-              className="form-control"
-              value={conversionRate !== null ? (amount * conversionRate).toFixed(2) : 'N/A'}
-              readOnly
-            />
-          </div>
+        <button className="invert-button" onClick={handleInvert}>⇅</button>
+        <div className="input-group">
+          <input
+            type="text"
+            value={conversionRate !== null ? (amount * conversionRate).toFixed(2) : 'N/A'}
+            readOnly
+            className="result-input"
+          />
+          <select
+            value={currency}
+            onChange={handleCurrencyChange}
+            className="currency-select"
+          >
+            {[...fiatCurrencies, ...cryptocurrencies].map((curr) => (
+              <option key={curr.code} value={curr.code}>
+                {curr.flag || curr.icon} {curr.code.toUpperCase()}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="mt-3">
-          1 {selectedCoin?.toUpperCase()} = {conversionRate !== null ? conversionRate : 'N/A'} {currency.toUpperCase()}
-          <br />
-          Rate is for reference only. Updated a few seconds ago.
-        </div>
-      </form>
+      </div>
+      <div className="conversion-rate">
+        1 {selectedCoin?.toUpperCase()} = {conversionRate !== null ? conversionRate.toFixed(2) : 'N/A'} {currency.toUpperCase()}
+      </div>
+      <div className="rate-info">
+        Rate is for reference only. Updated a few seconds ago.
+      </div>
     </div>
   );
 };

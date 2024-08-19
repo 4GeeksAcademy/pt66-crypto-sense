@@ -116,3 +116,10 @@
     background-color: #f8d7da;
     color: #721c24;
 }
+
+.forgot-password-link {
+    color: #24263e;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
