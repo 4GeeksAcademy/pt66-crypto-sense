@@ -60,13 +60,13 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/favoritecoins">
-                  Portfolio
+                <Link className="nav-link" to="/home">
+                  Crypto Search
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/home">
-                  Homepage
+                <Link className="nav-link" to="/favoritecoins">
+                  Portfolio
                 </Link>
               </li>
             </ul>
