@@ -263,17 +263,24 @@ def forgot_password():
         return jsonify({"message": "Email provided is not in our records"}), 404
     return jsonify({"message": "If an account with that email exists, we have sent a password reset link"}), 200
 
-@api.route('/reset-password/<token>', methods=['POST'])
-def reset_password(token):
+@api.route('/reset-password', methods=['POST'])
+def reset_password():
     """
     payload:
     {
-        "new_password" : "string"
+        "token": "string",
+        "password": "string"
     }
     """
-    user = User.query.filter_by(reset_token = token).first()
+    data = request.json
+    token = data.get('token')
+    new_password = data.get('password')
+
+    if not token or not new_password:
+        return jsonify({"message": "Token and new password are required"}), 400
+
+    user = User.query.filter_by(reset_token=token).first()
     if user and user.verify_reset_token(token):
-        new_password = request.json.get('new_password')
         user.reset_password(new_password)
         return jsonify({"message": "Your password has been updated"}), 200
     return jsonify({"message": "Invalid or expired token"}), 400

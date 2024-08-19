@@ -1,0 +1,78 @@
+Tree:
+pt66-crypto-sense	
+    _pycache_
+	.devcontainer
+	.venv
+	.vscode
+	frontend
+        .
+        ├── components
+        │   ├── CoinConverter.jsx
+        │   ├── CoinSearch.jsx
+        │   ├── Footer.jsx
+        │   ├── Logout.jsx
+        │   ├── Navbar.jsx
+        │   ├── NewsComponent.jsx
+        │   ├── NewsComponent2.jsx
+        │   ├── ScrollToTop.jsx
+        │   ├── ThemeContext.jsx
+        │   └── searchBar
+        │       ├── SearchBar.jsx
+        │       └── searchBar.css
+        ├── hooks
+        │   └── useGlobalReducer.jsx
+        ├── index.css
+        ├── login.css
+        ├── main.jsx
+        ├── pages
+        │   ├── Dashboard.jsx
+        │   ├── Demo.jsx
+        │   ├── Home.jsx
+        │   ├── Layout.jsx
+        │   ├── Login.jsx
+        │   ├── MyDashboard.jsx
+        │   ├── Register.jsx
+        │   ├── Single.jsx
+        │   ├── coin
+        │   │   ├── Coin.jsx
+        │   │   └── coin.css
+        │   ├── cryptocoins
+        │   │   ├── CryptoCoins.jsx
+        │   │   └── cryptocoins.css
+        │   ├── dashboard
+        │   │   ├── Dashboard.jsx
+        │   │   └── dashboard.css
+        │   ├── favoritecoins
+        │   │   ├── FavoriteCoins.jsx
+        │   │   └── favoriteCoins.css
+        │   ├── forgotpassword
+        │   │   ├── ForgotPassword.jsx
+        │   │   ├── ResetPassword.jsx
+        │   │   ├── forgotPassword.css
+        │   │   └── resetPassword.css
+        │   └── landing
+        │       ├── Landing.jsx
+        │       ├── icons
+        │       │   ├── 1inch icon.svg
+        │       │   ├── binance-coin.svg
+        │       │   ├── bitcoin-coin.svg
+        │       │   ├── coinbase-coin.svg
+        │       │   ├── ethereum-coin.svg
+        │       │   ├── matic-coin.svg
+        │       │   ├── ripple-coin.svg
+        │       │   ├── solana-coin.svg
+        │       │   ├── tether-coin.svg
+        │       │   ├── uniswap-coin.svg
+        │       │   └── usdc-coin.svg
+        │       └── landing.css
+        ├── register.css
+        ├── routes.jsx
+        ├── store.js
+        └── styles
+            ├── CoinConverter.css
+            ├── CoinSearch.css
+            ├── Dashboard.css
+            ├── Footer.css
+            ├── MyDashboard.css
+            └── NewsComponent.css
+

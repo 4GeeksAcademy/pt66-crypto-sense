@@ -1,4 +1,3 @@
-
 * {
   padding: 0;
   margin: 0;
@@ -8,15 +7,15 @@
 
 :root {
   --primary-color: #0885e8;
-  --secondary-color: #143361;
+  --secondary-color: #0c182a;
   --background-dark: #10111c;
   --text-light: #ffffff;
   --text-dark: #000000;
-  
-  /* Font family variables */
   --font-atkinson: 'Atkinson Hyperlegible', sans-serif;
   --font-kanit: 'Kanit', sans-serif;
   --font-roboto: 'Roboto', sans-serif;
+  --background-navbar-dark: #141624;
+  --background-navbar-light: #f8f9fa;
 }
 
 body {
@@ -97,7 +96,21 @@ body {
   z-index: 1000;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background-color: rgba(16, 17, 28, 0.98);
+  background-color: var(--background-navbar-dark);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-light {
+  background-color: var(--background-navbar-light);
+}
+
+.navbar-dark {
+  background-color: var(--background-navbar-dark); /* Added: Background color for dark theme */
+}
+
+.navbar .nav-link {
+  color: var(--text-light); /* Added: Nav link color for dark theme */
+  transition: color 0.3s ease; /* Added: Smooth transition for text color change */
 }
 
 .navbar .container {
@@ -133,7 +146,7 @@ body {
   }
 
   .navbar-toggler {
-    margin-right: 0; /* Remove margin from toggler button */
+    margin-right: 0;
   }
 
   .navbar-collapse {
@@ -226,4 +239,89 @@ body {
     margin-top: 0.5rem;
     width: 100%;
   }
+}
+
+.navbar-light .nav-link {
+  color: var(--text-dark); /* Added: Nav link color for light theme */
+}
+
+.navbar-light .nav-link:hover {
+  color: var(--primary-color); /* Added: Hover color for nav links in light theme */
+}
+
+.navbar-dark .nav-link {
+  color: var(--text-muted-dark); /* Added: Nav link color for dark theme (muted) */
+}
+
+.navbar-dark .nav-link:hover {
+  color: var(--text-light); /* Added: Hover color for nav links in dark theme */
+}
+
+.navbar .navbar-toggler {
+  border-color: var(--text-light); /* Added: Toggler border color for dark theme */
+}
+
+.navbar-light .navbar-toggler {
+  border-color: var(--text-dark); /* Added: Toggler border color for light theme */
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='currentColor'><path stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>"); /* Added: Toggler icon for dark theme */
+}
+
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='currentColor'><path stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>"); /* Added: Toggler icon for light theme */
+}
+
+.navbar .dropdown-menu {
+  background-color: var(--background-navbar-dark); /* Added: Dropdown menu background for dark theme */
+  border: none;
+}
+
+.navbar-light .dropdown-menu {
+  background-color: var(--background-navbar-light); /* Added: Dropdown menu background for light theme */
+}
+
+.dropdown-item {
+  color: var(--text-light); /* Added: Dropdown item text color for dark theme */
+}
+
+.navbar-light .dropdown-item {
+  color: var(--text-dark); /* Added: Dropdown item text color for light theme */
+}
+
+.dropdown-item:hover {
+  background-color: var(--primary-color); /* Added: Dropdown item hover background color */
+  color: var(--text-light); /* Added: Dropdown item hover text color */
+}
+
+.navbar-light .dropdown-item:hover {
+  background-color: var(--primary-color); /* Added: Dropdown item hover background color for light theme */
+  color: var(--text-light); /* Added: Dropdown item hover text color for light theme */
+}
+
+.navbar .btn-outline-light {
+  color: var(--text-light); /* Added: Button text color for dark theme */
+  border-color: var(--text-light); /* Added: Button border color for dark theme */
+}
+
+.navbar-light .btn-outline-light {
+  color: var(--text-dark); /* Added: Button text color for light theme */
+  border-color: var(--text-dark); /* Added: Button border color for light theme */
+}
+
+.navbar-light .btn-outline-light:hover {
+  color: var(--text-light); /* Added: Button hover text color for light theme */
+  background-color: var(--text-dark); /* Added: Button hover background color for light theme */
+}
+
+.navbar-dark .btn-outline-light:hover {
+  color: var(--text-dark); /* Added: Button hover text color for dark theme */
+  background-color: var(--text-light); /* Added: Button hover background color for dark theme */
+}
+
+.navbar .btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-light);
 }

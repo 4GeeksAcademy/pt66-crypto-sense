@@ -67,7 +67,8 @@
             #24263e 0%,
             #151726 30%,
             #1a1b2e 100%);
-    box-shadow: 0px 0px 30px 8px rgba(49, 49, 49, 0.5);
+    box-shadow: 0px 0px 30px 8px rgba(8, 8, 8, 0.557);
+    /* box-shadow: 0px 0px 30px 8px rgba(49, 49, 49, 0.5); */
     border-radius: 15px;
     overflow: hidden;
     color: white;

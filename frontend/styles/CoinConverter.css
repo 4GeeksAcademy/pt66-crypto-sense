@@ -1,29 +1,141 @@
-.card {
-  max-width: 800px;
-  padding: 20px 10px;
-  border-radius: 8px;
-  border: none;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.coin-converter {
+  background-color: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.coin-logo {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.coin-converter.dark {
+  background-color: #12162a70;
+  color: #e0e0e0;
 }
 
-.input-group-prepend {
+.coin-converter.light {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.converter-title {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.converter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group {
   display: flex;
   align-items: center;
+  background-color: var(--bg-primary);
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-.conversion-result {
-  font-size: 1.2em;
-  font-weight: bold;
+.amount-input, .result-input {
+  flex-grow: 1;
+  padding: 8px;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+  min-width: 0; /* Allows the input to shrink below its default size */
 }
 
-.conversion-info {
-  font-size: 0.9em;
-  color: #555;
+.currency-select {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--bg-accent);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.currency-icon {
+  margin-right: 5px;
+}
+
+.invert-button {
+  align-self: center;
+  background-color: var(--bg-accent);
+  border: none;
+  color: inherit;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.invert-button:hover {
+  background-color: var(--bg-accent-hover);
+}
+
+.conversion-rate {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.rate-info {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Dark mode specific styles */
+.dark .input-group {
+  background-color: #3a3b4d;
+}
+
+.dark .currency-select {
+  background-color: #4a4b5d;
+}
+
+.dark .invert-button {
+  background-color: #4a4b5d;
+}
+
+.dark .invert-button:hover {
+  background-color: #5a5b6d;
+}
+
+/* Light mode specific styles */
+.light .input-group {
+  background-color: #ffffff;
+}
+
+.light .currency-select {
+  background-color: #e0e0e0;
+}
+
+.light .invert-button {
+  background-color: #e0e0e0;
+}
+
+.light .invert-button:hover {
+  background-color: #d0d0d0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .coin-converter {
+    padding: 10px;
+  }
+
+  .converter-title {
+    font-size: 1rem;
+  }
+
+  .amount-input, .result-input, .currency-select {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
 }
