@@ -84,9 +84,9 @@ const CoinConverter = ({ selectedCoin, logoUrl }) => {
             className="amount-input"
           />
           <div className="currency-select">
-            <span className="currency-icon">
+            {/* <span className="currency-icon">
               {logoUrl ? <img src={logoUrl} alt={selectedCoin} width="20" /> : (cryptocurrencies.find((c) => c.code === selectedCoin)?.icon || '₿')}
-            </span>
+            </span> */}
             <span>{selectedCoin?.toUpperCase()}</span>
           </div>
         </div>

@@ -1,0 +1,50 @@
+.about-page {
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-dark-gradient);
+    color: var(--text-color);
+  }
+  
+  .dark .about-page {
+    background-color: var(--background-dark-gradient);
+  }
+  
+  .about-container {
+    max-width: 800px;
+    background-color: var(--background-dark);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-color-dark);
+    text-align: center;
+  }
+  
+  .dark .about-container {
+    background-color: var(--background-dark);
+    box-shadow: var(--shadow-dark);
+  }
+  
+  .about-title {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .about-description,
+  .about-mission,
+  .about-team {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
+  }
+  
+  .about-subtitle {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  

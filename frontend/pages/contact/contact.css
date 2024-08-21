@@ -1,0 +1,96 @@
+.contact-page {
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-dark-gradient);
+    color: var(--text-color);
+  }
+  
+  .dark .contact-page {
+    background-color: var(--background-dark-gradient);
+  }
+  
+  .contact-container {
+    max-width: 800px;
+    background-color: var(--background-dark);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-color-dark);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dark .contact-container {
+    background-color: var(--background-dark);
+    box-shadow: var(--shadow-dark);
+  }
+  
+  .contact-title {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .contact-description {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-color);
+  }
+  
+  .contact-form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .contact-input,
+  .contact-textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color-light);
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--background-light);
+    transition: border-color 0.3s ease;
+  }
+  
+  .contact-input:focus,
+  .contact-textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  .dark .contact-input,
+  .dark .contact-textarea {
+    background-color: var(--input-bg-dark);
+    border: 1px solid var(--border-color-dark);
+  }
+  
+  .contact-button {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    font-size: 1.125rem; /* 18px */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-button:hover {
+    background-color: var(--hover-bg-light);
+  }
+  
+  .dark .contact-button:hover {
+    background-color: var(--hover-bg-dark);
+  }
+  

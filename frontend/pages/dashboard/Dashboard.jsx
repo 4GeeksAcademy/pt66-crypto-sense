@@ -17,6 +17,7 @@ import { useTheme } from "../../components/ThemeContext";
 import CoinConverter from "../../components/CoinConverter";
 import NewsComponent from "../../components/NewsComponent";
 import "./dashboard.css";
+import Cookies from 'js-cookie';
 
 
 ChartJS.register(
@@ -31,13 +32,14 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { store } = useGlobalReducer();
+  const { store, dispatch } = useGlobalReducer();
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [chartData, setChartData] = useState(null);
-  const [timeRange, setTimeRange] = useState("ALL");
   const [portfolioValue, setPortfolioValue] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -59,21 +61,37 @@ const Dashboard = () => {
   }, [store.favorites]);
 
   const fetchChartData = async (coinId) => {
+    setIsLoading(true);
+    setError(null);
+
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": import.meta.env.VITE_COINGECKO_API_KEY,
+      },
+    };
+
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=30`
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=30`,
+        options
       );
-      const data = await response.json();
-  
-      const ctx = chartRef.current?.canvas.getContext("2d");
-      let gradient = null;
-      if (ctx) {
-        // Create a bluish gradient
-        gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, "rgba(0, 123, 255, 0.4)");
-        gradient.addColorStop(1, "rgba(0, 123, 255, 0)");
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again later.");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
-  
+
+      const data = await response.json();
+
+      if (!data || !data.prices || data.prices.length === 0) {
+        throw new Error("Invalid data received from the API");
+      }
+
       setChartData({
         labels: data.prices.map((price) =>
           new Date(price[0]).toLocaleDateString()
@@ -83,7 +101,22 @@ const Dashboard = () => {
             label: "Price (USD)",
             data: data.prices.map((price) => price[1]),
             fill: true,
-            backgroundColor: gradient || "rgba(0, 123, 255, 0.4)",
+            backgroundColor: function (context) {
+              const chart = context.chart;
+              const { ctx, chartArea } = chart;
+              if (!chartArea) {
+                return null;
+              }
+              const gradient = ctx.createLinearGradient(
+                0,
+                chartArea.bottom,
+                0,
+                chartArea.top
+              );
+              gradient.addColorStop(0, "rgba(0, 123, 255, 0)");
+              gradient.addColorStop(1, "rgba(0, 123, 255, 0.4)");
+              return gradient;
+            },
             borderColor: "rgba(98, 213, 255, 0.6)",
             borderWidth: 2,
             pointRadius: 0,
@@ -93,9 +126,11 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error("Error fetching chart data:", error);
+      setError(error.message || "An error occurred while fetching chart data");
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   const chartOptions = {
     responsive: true,
@@ -158,6 +193,39 @@ const Dashboard = () => {
     fetchChartData(coin.id);
   };
 
+  const handleRemoveCoin = async (coinId) => {
+    const token = Cookies.get('token'); // Retrieve the token from cookies
+    console.log("Token retrieved from cookies:", token);
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/favorites/${coinId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        }
+      );
+
+      if (response.ok) {
+        dispatch({ type: "remove_favorite", coinId }); // Ensure dispatch is called properly
+      } else {
+        console.error("Failed to remove favorite:", response.statusText);
+        alert(`Error removing favorite: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+      alert("An error occurred while removing the coin.");
+    }
+  };
+  
+  
+
   return (
     <div className={`dashboard ${isDarkMode ? "dark" : "light"}`}>
       <div className="dashboard-content">
@@ -169,7 +237,9 @@ const Dashboard = () => {
           <div className="portfolio-chart">
             <h2>{selectedCoin?.name} Price Chart</h2>
             <div className="chart-container">
-              {chartData && (
+              {isLoading && <p>Loading...</p>}
+              {error && <p>Error: {error}</p>}
+              {!isLoading && !error && chartData && (
                 <Line ref={chartRef} data={chartData} options={chartOptions} />
               )}
             </div>
@@ -204,6 +274,7 @@ const Dashboard = () => {
                 <th>24h Change</th>
                 <th>Market Cap</th>
                 <th>Volume (24h)</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
@@ -228,6 +299,18 @@ const Dashboard = () => {
                   </td>
                   <td>${coin.market_cap.toLocaleString()}</td>
                   <td>${coin.total_volume.toLocaleString()}</td>
+                  <td>
+                    <button
+                      className="remove-coin-button"
+                      onClick={(e) => {
+                        // no row click
+                        e.stopPropagation();
+                        handleRemoveCoin(coin.id);
+                      }}
+                    >
+                    <i className="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

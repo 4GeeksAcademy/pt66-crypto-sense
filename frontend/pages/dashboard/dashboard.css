@@ -1,11 +1,16 @@
+@import '../../index.css';
+
 .dashboard {
   min-height: 100vh;
-  padding: 20px;
+  padding: 20px; 
+  background-color: var(--background-color); 
+  color: var(--text-color); 
+  font-family: var(--font-kanit); 
 }
 
 .dashboard.dark {
   background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
-  color: #e2e8f0;
+  color: var(--text-light); 
 }
 
 .dashboard-content {
@@ -17,21 +22,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
 }
 
 .dashboard-main {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 20px; 
+  margin-bottom: 20px; 
 }
 
-.portfolio-chart {
-  width: 60%;
-  border-radius: 8px;
-  padding: 20px;
-}
-
+/* Portfolio Chart */
 .portfolio-chart {
   width: 60%;
   border-radius: 8px;
@@ -39,44 +39,47 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: var(--background-color); 
 }
 
 .chart-container {
-    position: relative;
-    height: 90%; 
-    background: none;
+  position: relative;
+  height: 90%;
+  background: none;
 }
 
+
 .dark .portfolio-chart {
-  background-color: #10111c;
+  background-color: var(--background-dark); 
 }
+
 
 .side-components {
   width: 40%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 20px; 
 }
 
 .news-component,
 .converter-component {
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px; 
+  background-color: var(--background-color); 
 }
+
 
 .dark .news-component,
 .dark .converter-component {
-  background-color: #10111c;
+  background-color: var(--background-dark); 
 }
 
 .assets-list {
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px; 
   overflow-x: auto;
-}
-
-.dark .assets-list {
-  background-color: #10111c;
+  background-color: var(--background-color);
+  margin-bottom: 3rem; 
 }
 
 .assets-list table {
@@ -88,12 +91,14 @@
 .assets-list th,
 .assets-list td {
   text-align: left;
-  padding: 12px;
+  padding: 12px; 
+  border-bottom: 1px solid var(--border-color-light); 
 }
+
 
 .dark .assets-list th,
 .dark .assets-list td {
-  border-bottom: 1px solid #2d3748;
+  border-bottom: 1px solid var(--border-color-dark); 
 }
 
 .assets-list th {
@@ -101,19 +106,25 @@
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.05em;
+  background-color: var(--background-light); 
+  color: var(--text-dark); 
 }
 
+
 .dark .assets-list th {
-  background-color: #1a1b2e;
-  color: #a0aec0;
+  background-color: var(--background-dark);
+  color: var(--text-light); 
+
 }
 
 .assets-list tr:hover {
   cursor: pointer;
+  background-color: var(--hover-bg-light); 
 }
 
+
 .dark .assets-list tr:hover {
-  background-color: #1a1b2e;
+  background-color: var(--hover-bg-dark);
 }
 
 .assets-list img {
@@ -128,17 +139,19 @@
   font-size: 0.8rem;
 }
 
+
 .dark .coin-symbol {
-  color: #a0aec0;
+  color: var(--text-light);
 }
 
 .positive {
-  color: #48bb78;
+  color: #48bb78; 
 }
 
 .negative {
-  color: #f56565;
+  color: #f56565; 
 }
+
 
 .btn {
   padding: 8px 16px;
@@ -146,25 +159,27 @@
   border: none;
   cursor: pointer;
   font-weight: 600;
+  background-color: var(--button-bg); 
+  color: var(--text-light);
 }
 
 .btn-primary {
-  background-color: #3182ce;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .btn-secondary {
-  background-color: #2d3748;
-  color: #e2e8f0;
+  background-color: var(--button-bg-secondary); 
+  color: var(--text-light); 
 }
 
 .btn-sm {
-  padding: 4px 8px;
+  padding: 4px 8px; 
   font-size: 0.875rem;
 }
 
 .btn-active {
-  background-color: #4a5568;
+  background-color: var(--active-bg-dark); 
 }
 
 @media (max-width: 768px) {
@@ -183,7 +198,25 @@
 
   .assets-list th,
   .assets-list td {
-    padding: 8px;
+    padding: 8px; 
   }
 }
 
+.remove-coin-button {
+  background-color: transparent;
+  border: none;
+  color: #e53e3e; /* A red color to indicate deletion */
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.remove-coin-button:hover {
+  color: #c53030; /* Darker red on hover */
+}
+
+.remove-coin-button i {
+  margin: 0;
+  padding: 0;
+}

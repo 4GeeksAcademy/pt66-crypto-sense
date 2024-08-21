@@ -1,17 +1,17 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import "../index.css";
+import "../styles/Navbar.css";
 import Cookies from "js-cookie";
 import logoImage from "../assets/img/logo.png";
 import { useTheme } from "../components/ThemeContext";
-import { User, Sun, Moon, LogOut } from 'lucide-react';
+import { User, Sun, Moon, LogOut } from "lucide-react";
 
 export const Navbar = () => {
   const location = useLocation();
   const { store, dispatch } = useGlobalReducer();
   const { token } = store;
   const navigate = useNavigate();
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme, globalTheme } = useTheme();
 
   const isLandingPage = [
     "/",
@@ -32,7 +32,11 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar navbar-expand-lg fixed-top ${isDarkMode ? 'navbar-dark' : 'navbar-light bg-light'}`}>
+    <nav
+      className={`navbar navbar-expand-lg fixed-top ${
+        isDarkMode ? "dark" : "light"
+      }`}
+    >
       <Link className="brand-nav m-0" to="/">
         <img className="logo-image" src={logoImage} alt="logo" />
       </Link>
@@ -71,17 +75,31 @@ export const Navbar = () => {
               </li>
             </ul>
             <div className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <User size={24} />
               </a>
-              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
                 <li>
                   <a className="dropdown-item" href="#" onClick={toggleTheme}>
                     {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-                    <span className="ms-2">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                    <span className="ms-2">
+                      {isDarkMode ? "Light Mode" : "Dark Mode"}
+                    </span>
                   </a>
                 </li>
-                <li><hr className="dropdown-divider" /></li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
                 <li>
                   <a className="dropdown-item" href="#" onClick={handleLogout}>
                     <LogOut size={18} />

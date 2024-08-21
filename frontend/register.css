@@ -4,12 +4,13 @@
   align-items: center;
   justify-content: center;
   border: none;
+  background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
 }
 
 .register .registerCard {
   display: flex;
   flex-direction: row-reverse;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   width: 90%;
   max-width: 1000px;
   height: 600px;
@@ -37,7 +38,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 30px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .register .registerCard .left h1 {
@@ -103,10 +104,10 @@
 .register .registerCard .right form button {
   width: 50%;
   padding: 10px;
-  color: white;
+  color: rgb(2, 2, 2);
   background-color: navy;
   border: none;
-  border-radius: 5px;
+  border-radius: 1px;
   cursor: pointer;
   font-weight: bold;
 }

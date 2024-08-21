@@ -49,7 +49,7 @@ const Login = () => {
       dispatch({ type: "update_token", token });
 
       // Redirect to favorite coins page
-      navigate("/favoritecoins");
+      navigate("/home");
     } catch (error) {
       setError("Invalid Email or Password.");
     }

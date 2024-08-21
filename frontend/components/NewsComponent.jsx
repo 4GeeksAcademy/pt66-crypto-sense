@@ -19,9 +19,11 @@ const NewsComponent = ({ selectedCoin }) => {
     setError(null);
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/coin_news/${coin}`);
+      
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+
       const data = await response.json();
       if (data && data.articles && data.articles.length > 0) {
         setNews(data.articles[0]);
@@ -30,7 +32,7 @@ const NewsComponent = ({ selectedCoin }) => {
       }
     } catch (error) {
       console.error('Error fetching news:', error);
-      setError('Failed to fetch news. Please try again.');
+      setError('Uh oh, looks like there are no news for this coin.');
     } finally {
       setLoading(false);
     }

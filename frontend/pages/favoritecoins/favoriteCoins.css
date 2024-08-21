@@ -1,6 +1,11 @@
+#root {
+  background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
+}
+
 .favoriteCoins{
   margin-bottom: 200px;
   margin-top: 200px;
+  
 }
 
 .noAdded{

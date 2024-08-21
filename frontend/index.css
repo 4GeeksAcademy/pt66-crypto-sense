@@ -2,326 +2,89 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-  --primary-color: #0885e8;
-  --secondary-color: #0c182a;
-  --background-dark: #10111c;
-  --text-light: #ffffff;
-  --text-dark: #000000;
-  --font-atkinson: 'Atkinson Hyperlegible', sans-serif;
-  --font-kanit: 'Kanit', sans-serif;
-  --font-roboto: 'Roboto', sans-serif;
-  --background-navbar-dark: #141624;
-  --background-navbar-light: #f8f9fa;
+  font-family: var(--font-kanit);
+  /* Apply Kanit font globally */
 }
 
 body {
   margin: 0;
-  font-family: var(--font-roboto);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(
-        135deg,
-        #24263e 0%,
-        #151726 30%,
-        #121320 100%
-      );
-}
-
-/* Font weight classes for Atkinson Hyperlegible */
-.atkinson {
-  font-family: var(--font-atkinson);
-}
-.atkinson-regular { font-weight: 400; }
-.atkinson-bold { font-weight: 700; }
-.atkinson-italic { font-style: italic; }
-
-/* Font weight classes for Kanit */
-.kanit {
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: var(--font-kanit);
 }
-.kanit-thin { font-weight: 100; }
-.kanit-extralight { font-weight: 200; }
-.kanit-light { font-weight: 300; }
-.kanit-regular { font-weight: 400; }
-.kanit-medium { font-weight: 500; }
-.kanit-semibold { font-weight: 600; }
-.kanit-bold { font-weight: 700; }
-.kanit-extrabold { font-weight: 800; }
-.kanit-black { font-weight: 900; }
 
-/* Font weight classes for Roboto */
-.roboto {
-  font-family: var(--font-roboto);
-}
-.roboto-thin { font-weight: 100; }
-.roboto-light { font-weight: 300; }
-.roboto-regular { font-weight: 400; }
-.roboto-medium { font-weight: 500; }
-.roboto-bold { font-weight: 700; }
-.roboto-black { font-weight: 900; }
-
-/* Italic classes */
-.italic { font-style: italic; }
-
-.button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button-primary {
-  background-color: var(--primary-color);
-  color: var(--text-light);
-}
-
-.logo-image {
-  height: 3rem;
-  width: auto;
-  margin: 0;
+/* Root Variables */
+:root {
+  --primary-color: #0885e8;
+  --secondary-color: #0c182a;
+  --background-dark: #10111c;
+  --background-dark-gradient: background: linear-gradient(135deg, #24263e 0%, #151726 30%, #121320 100%);
+  --background-light: #ffffff;
+  --text-light: #ffffff;
+  --text-light-hover: #9a7ffc;
+  --text-dark: #000000;
+  --background-navbar-dark: #141624;
+  --background-navbar-light: #f8f9fa;
+  --accent-color-dark: #64caec;
+  --accent-color-light: #006bb3;
+  --border-color-dark: #2d3748;
+  --border-color-light: #dcdcdc;
+  --button-bg-dark: #3182ce;
+  --button-bg-light: #006bb3;
+  --button-bg-secondary-dark: #2d3748;
+  --button-bg-secondary-light: #e0e0e0;
+  --shadow-color-dark: rgba(0, 0, 0, 0.6);
+  --shadow-color-light: rgba(0, 0, 0, 0.1);
+  --link-color-dark: #64caec;
+  --link-color-light: #006bb3;
+  --input-bg-dark: #3a3b4d;
+  --input-bg-light: #f7f7f7;
+  --input-text-color-dark: #ffffff;
+  --input-text-color-light: #000000;
+  --hover-bg-dark: #1a202c;
+  --hover-bg-light: #e2e8f0;
+  --active-bg-dark: #2d3748;
+  --active-bg-light: #cbd5e0;
+  --font-kanit: 'Kanit', sans-serif;
+  --border-radius: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  margin: 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  background-color: var(--background-navbar-dark);
-  transition: background-color 0.3s ease;
+/* Dark Theme */
+body.dark-theme {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-light);
+  --navbar-background: var(--background-navbar-dark);
+  --accent-color: var(--accent-color-dark);
+  --border-color: var(--border-color-dark);
+  --button-bg: var(--button-bg-dark);
+  --button-bg-secondary: var(--button-bg-secondary-dark);
+  --shadow-color: var(--shadow-color-dark);
+  --link-color: var(--link-color-dark);
+  --input-bg: var(--input-bg-dark);
+  --input-text-color: var(--input-text-color-dark);
+  --hover-bg: var(--hover-bg-dark);
+  --active-bg: var(--active-bg-dark);
 }
 
-.navbar-light {
-  background-color: var(--background-navbar-light);
+/* Light Theme */
+body.light-theme {
+  --background-color: var(--background-light);
+  --text-color: var(--text-dark);
+  --navbar-background: var(--background-navbar-light);
+  --accent-color: var(--accent-color-light);
+  --border-color: var(--border-color-light);
+  --button-bg: var(--button-bg-light);
+  --button-bg-secondary: var(--button-bg-secondary-light);
+  --shadow-color: var(--shadow-color-light);
+  --link-color: var(--link-color-light);
+  --input-bg: var(--input-bg-light);
+  --input-text-color: var(--input-text-color-light);
+  --hover-bg: var(--hover-bg-light);
+  --active-bg: var(--active-bg-light);
 }
 
-.navbar-dark {
-  background-color: var(--background-navbar-dark); /* Added: Background color for dark theme */
-}
-
-.navbar .nav-link {
-  color: var(--text-light); /* Added: Nav link color for dark theme */
-  transition: color 0.3s ease; /* Added: Smooth transition for text color change */
-}
-
-.navbar .container {
-  width: 100%;
-  padding-left: 0; 
-  padding-right: 0.5rem; 
-}
-
-.brand-nav {
-  padding-left: 0.5rem;
-}
-
-.navbar .btn {
-  margin-left: 0.5rem;
-}
-
-@media (min-width: 992px) {
-  .navbar {
-    padding-left: 1rem; 
-    padding-right: 1rem;
-  }
-
-  .navbar .container {
-    padding-left: 0; 
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .navbar {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .navbar-toggler {
-    margin-right: 0;
-  }
-
-  .navbar-collapse {
-    padding-top: 0.5rem;
-  }
-
-  .navbar-nav {
-    margin-right: 0;
-  }
-
-  .navbar .btn {
-    margin-top: 0.5rem;
-    margin-left: 0; /* Remove left margin on small screens */
-    width: 100%;
-  }
-}
-
-.nav-buttons button {
-  margin-left: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.sign-in {
-  background-color: transparent;
-  color: white;
-  border: 1px solid white !important;
-}
-
-.try-free {
-  background-color: #0885e8;
-  color: white;
-}
-
-.navbar-nav {
-  margin-right: auto;
-}
-
-.navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #fff !important;
-}
-
-.navbar .btn {
-  padding: 0.375rem 0.75rem;
-  font-size: 0.9rem;
-}
-
-.navbar .btn-primary {
-  background-color: #0885e8;
-  border-color: #0885e8;
-}
-
-.navbar .btn-outline-light {
-  color: #fff;
-  border-color: #fff;
-}
-
-.navbar .btn-outline-light:hover {
-  color: #000;
-  background-color: #fff;
-}
-
-.navbar-collapse {
-  justify-content: flex-end;
-}
-
-@media (min-width: 992px) {
-  .navbar .container {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .navbar .container {
-    padding-right: 1rem;
-  }
-  
-  .navbar-nav {
-    margin-right: 0;
-  }
-  
-  .navbar .btn {
-    margin-top: 0.5rem;
-    width: 100%;
-  }
-}
-
-.navbar-light .nav-link {
-  color: var(--text-dark); /* Added: Nav link color for light theme */
-}
-
-.navbar-light .nav-link:hover {
-  color: var(--primary-color); /* Added: Hover color for nav links in light theme */
-}
-
-.navbar-dark .nav-link {
-  color: var(--text-muted-dark); /* Added: Nav link color for dark theme (muted) */
-}
-
-.navbar-dark .nav-link:hover {
-  color: var(--text-light); /* Added: Hover color for nav links in dark theme */
-}
-
-.navbar .navbar-toggler {
-  border-color: var(--text-light); /* Added: Toggler border color for dark theme */
-}
-
-.navbar-light .navbar-toggler {
-  border-color: var(--text-dark); /* Added: Toggler border color for light theme */
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='currentColor'><path stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>"); /* Added: Toggler icon for dark theme */
-}
-
-.navbar-light .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='currentColor'><path stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>"); /* Added: Toggler icon for light theme */
-}
-
-.navbar .dropdown-menu {
-  background-color: var(--background-navbar-dark); /* Added: Dropdown menu background for dark theme */
-  border: none;
-}
-
-.navbar-light .dropdown-menu {
-  background-color: var(--background-navbar-light); /* Added: Dropdown menu background for light theme */
-}
-
-.dropdown-item {
-  color: var(--text-light); /* Added: Dropdown item text color for dark theme */
-}
-
-.navbar-light .dropdown-item {
-  color: var(--text-dark); /* Added: Dropdown item text color for light theme */
-}
-
-.dropdown-item:hover {
-  background-color: var(--primary-color); /* Added: Dropdown item hover background color */
-  color: var(--text-light); /* Added: Dropdown item hover text color */
-}
-
-.navbar-light .dropdown-item:hover {
-  background-color: var(--primary-color); /* Added: Dropdown item hover background color for light theme */
-  color: var(--text-light); /* Added: Dropdown item hover text color for light theme */
-}
-
-.navbar .btn-outline-light {
-  color: var(--text-light); /* Added: Button text color for dark theme */
-  border-color: var(--text-light); /* Added: Button border color for dark theme */
-}
-
-.navbar-light .btn-outline-light {
-  color: var(--text-dark); /* Added: Button text color for light theme */
-  border-color: var(--text-dark); /* Added: Button border color for light theme */
-}
-
-.navbar-light .btn-outline-light:hover {
-  color: var(--text-light); /* Added: Button hover text color for light theme */
-  background-color: var(--text-dark); /* Added: Button hover background color for light theme */
-}
-
-.navbar-dark .btn-outline-light:hover {
-  color: var(--text-dark); /* Added: Button hover text color for dark theme */
-  background-color: var(--text-light); /* Added: Button hover background color for dark theme */
-}
-
-.navbar .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: var(--text-light);
-}

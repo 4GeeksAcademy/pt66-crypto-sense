@@ -1,29 +1,29 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isLandingPage, setIsLandingPage] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? savedTheme === 'dark' : true; // Default to dark if not set
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    document.body.className = isDarkMode ? 'dark-theme' : 'light-theme';
+  }, [isDarkMode]);
 
   const toggleTheme = () => {
-    if (!isLandingPage) {
-      setIsDarkMode(!isDarkMode);
-    }
+    setIsDarkMode(prevMode => !prevMode);
   };
 
-  const setLandingPageMode = (isLanding) => {
-    setIsLandingPage(isLanding);
-    if (isLanding) {
-      setIsDarkMode(true);
-    }
+  const setLandingPageMode = () => {
+    setIsDarkMode(true); 
   };
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, setLandingPageMode, isLandingPage }}>
-      <div className={isDarkMode ? 'dark-theme' : 'light-theme'}>
-        {children}
-      </div>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, setLandingPageMode }}>
+      {children}
     </ThemeContext.Provider>
   );
 };

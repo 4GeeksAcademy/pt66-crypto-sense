@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../landing/landing.css";
 import "../../index.css";
-import { useTheme } from "../../components/ThemeContext";
+import { useTheme } from '../../components/ThemeContext';
 
 import BinanceAsset from "./icons/binance-coin.svg";
 import BTCAsset from "./icons/bitcoin-coin.svg";
@@ -63,8 +63,7 @@ const Landing = () => {
   ];
 
   useEffect(() => {
-    setLandingPageMode(true);
-    return () => setLandingPageMode(false);
+    setLandingPageMode();
   }, [setLandingPageMode]);
 
   useEffect(() => {
